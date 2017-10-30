@@ -2,7 +2,7 @@
   "name": "giveth_video_wall_of_fame",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://eduadiez.github.io/GivethVWOF_v2",
+  "homepage": "https://fame.giveth.io",
   "dependencies": {
     "current-week-number": "^1.0.7",
     "firebase": "^4.5.2",
