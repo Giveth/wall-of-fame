@@ -64,13 +64,23 @@ html {
 #wall-of-fame-header {
   height: 300px;
   background: linear-gradient(rgba(80, 99, 119, 0.5), rgba(28, 59, 68, 0.9));
-  padding: 80px 20px 50px 20px;
   color: white;
   display: flex;
   flex-direction: row; }
   #wall-of-fame-header h3 {
     margin-bottom: 20px;
     color: white; }
+  #wall-of-fame-header .vertical-align {
+    position: absolute;
+    padding: 80px; }
+  #wall-of-fame-header .VideoHeader {
+    position: relative;
+    top: 0;
+    display: block;
+    margin: auto;
+    z-index: -20;
+    max-height: 100%;
+    max-width: 100%; }
 
 .overview-card .VideoWrapper .overlayContainer {
   position: absolute;
