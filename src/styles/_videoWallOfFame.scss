@@ -1,0 +1,27 @@
+.btn.btn-circle {
+    padding: 0;
+    border-radius: 50%;
+    margin: 0;
+    top: auto;
+    right: 3%;
+    bottom: 3%;
+    left: auto;
+    position: fixed;
+}
+
+.svgIcon {
+    display: block;
+}
+
+.btn-week{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%); 
+}
+
+.video-card > div{
+    max-width: 25%;
+    max-height: 150px;
+    min-width: 350px;
+    
+}
