@@ -37,7 +37,7 @@ class VideoWallOfFame extends Component {
     var _ref_prev = null
 
     if (_wall === "") {
-      _ref = firebase.database().ref("GVWOF_v2/").orderByKey().limitToLast(5)
+      _ref = firebase.database().ref("GVWOF_v2/").orderByKey().limitToLast(8)
     } else {
       _ref = firebase.database().ref("GVWOF_v2/").orderByChild('week').equalTo(_week)
     }
@@ -158,7 +158,7 @@ class VideoWallOfFame extends Component {
     var _ref = null
 
     if (_wall === "") {
-      _ref = firebase.database().ref("GVWOF_v2/").orderByKey().limitToLast(5)
+      _ref = firebase.database().ref("GVWOF_v2/").orderByKey().limitToLast(8)
     } else {
       _ref = firebase.database().ref("GVWOF_v2/").orderByChild('week').equalTo(_week)
     }
@@ -233,7 +233,7 @@ class VideoWallOfFame extends Component {
 
   loadItems() {
     if (this.state.wall === "") {
-      firebase.database().ref("GVWOF_v2/").orderByKey().limitToLast(6).endAt(this.state.referenceToOldestKey).on('value', this.gotData.bind(this), (err) => { console.log(err) });
+      //firebase.database().ref("GVWOF_v2/").orderByKey().limitToLast(6).endAt(this.state.referenceToOldestKey).on('value', this.gotData.bind(this), (err) => { console.log(err) });
     }
   }
 
@@ -271,13 +271,6 @@ class VideoWallOfFame extends Component {
             </div>
           </center>
         }
-
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={this.loadItems.bind(this)}
-          hasMore={this.state.hasMore}
-          loader={loader}>
-
 
           <div className="container-fluid page-layout reduced-padding" >
 
@@ -326,8 +319,6 @@ class VideoWallOfFame extends Component {
 
             <AddNewMediaButton week={this.state.week} wall={this.state.wall}/>
           </div>
-
-        </InfiniteScroll>
       </div>
 
     )
