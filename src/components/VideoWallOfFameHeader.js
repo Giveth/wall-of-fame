@@ -8,12 +8,12 @@ class VideoWallOfFameHeader extends Component {
     constructor() {
         super()
 
-       var _ref = firebase.database().ref("GVWOF_v2/").orderByKey().limitToLast(1)
+        var _ref = firebase.database().ref("GVWOF_v2/").orderByKey().limitToLast(1)
 
         this.state = {
             databaseRef: _ref,
-            media:[],
-            src:""
+            media: [],
+            src: ""
         }
 
         _ref.on('value', this.gotData, (err) => { console.log(err) });
@@ -58,11 +58,12 @@ class VideoWallOfFameHeader extends Component {
     }
 
 
+
     render() {
         return (
             <div id="wall-of-fame-header">
-                <div>
-                    <video className="VideoHeader" autoPlay muted loop src={this.state.src} />
+                <div className="VideoHeader">
+                    <video ref="vidHeaderRef" className="VideoPlayer" muted loop autoPlay src={this.state.src} />
                 </div>
                 <div className="vertical-align">
 

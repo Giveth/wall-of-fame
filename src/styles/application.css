@@ -79,8 +79,10 @@ html {
     display: block;
     margin: auto;
     z-index: -20;
-    max-height: 100%;
+    max-height: 300px;
     max-width: 100%; }
+  #wall-of-fame-header .VideoPlayer {
+    max-height: 300px; }
 
 .overview-card .VideoWrapper .overlayContainer {
   position: absolute;
@@ -91,7 +93,7 @@ html {
   z-index: 2;
   text-align: left;
   transition: opacity 0.5s;
-  opacity: 0;
+  opacity: 1;
   display: block;
   background: linear-gradient(rgba(80, 99, 119, 0.5), rgba(28, 59, 68, 0.9));
   padding: 10px;

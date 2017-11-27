@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://fame.giveth.io",
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "current-week-number": "^1.0.7",
     "firebase": "^4.5.2",
     "formsy-react": "0.19.5",
