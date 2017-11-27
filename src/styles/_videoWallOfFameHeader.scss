@@ -22,8 +22,12 @@
       display: block;
       margin: auto;
       z-index: -20;
-      max-height: 100%;
+      max-height: 300px;
       max-width: 100%;
+    }
+
+    .VideoPlayer{
+      max-height: 300px;
     }
   
   }

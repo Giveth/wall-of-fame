@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import poster from '../img/giveth.png' // relative path to image 
 
 class MediaCard extends Component {
 
@@ -14,7 +15,8 @@ class MediaCard extends Component {
             description: props.description,
             hideTimer: null,
             _overlay: null,
-            date: new Date(props.timestamp).toString()
+            date: new Date(props.timestamp).toString(),
+            video_src: null
         }
     }
 
@@ -39,18 +41,31 @@ class MediaCard extends Component {
         }, 1000);
     }
 
+    handleMouseEnter(){
+        if(this.state.video_src != null){
+            this.refs.vidRef.play();
+        }else{
+            this.setState({ video_src: this.state.src },()=>{this.refs.vidRef.play()});
+        }
+       
+    }
+
+    handleMouseLeave(){
+        if(this.state.video_src != null){
+            this.refs.vidRef.pause();
+        }
+    }
 
     render() {
-
         return (
             <div className="card overview-card">
-                <div className="VideoWrapper" onMouseMove={this.onMouseMove}>
+                <div className="VideoWrapper" onMouseMove={this.onMouseMove}  onMouseEnter={this.handleMouseEnter.bind(this)} onMouseLeave={this.handleMouseLeave.bind(this)}> 
                     <div className="overlayContainer" ref={ref => this._overlay = ref} onMouseMove={this.onMouseMove} >
                         <div>
                             <h4 className="overlayTitle">{this.props.title}</h4>
                         </div>
                     </div>
-                    <video controls autoPlay muted loop src={this.state.src} className="card-img .embed-responsive-item" />
+                    <video ref="vidRef" poster={poster} controls muted loop src={this.state.video_src} className="card-img .embed-responsive-item" />
                 </div>
             </div>
         )
