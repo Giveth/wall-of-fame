@@ -524,7 +524,7 @@ class MediaCapture_Web extends Component {
                                 type="text"
                                 value={this.state.description}
                                 onChange={this.onChangeDescription.bind(this)}
-                                placeholder="Descrption of Climate change."
+                                placeholder="Description of Climate change."
                             />
                         </div>
                         <div className="form-group" >
