@@ -305,6 +305,7 @@ class VideoWallOfFame extends Component {
                             description={media.description}
                             timestamp={media.timestamp}
                             week={media.week}
+                            date={moment(media.timestamp).format("HH:mm DD-MM-YYYY")}
                           />
                         </div>
 
