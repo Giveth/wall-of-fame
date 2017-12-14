@@ -16,7 +16,8 @@ class MediaCard extends Component {
             hideTimer: null,
             _overlay: null,
             date: props.date,
-            video_src: null
+            video_src: null,
+            disable: props.disable,
         }
     }
 
@@ -42,7 +43,10 @@ class MediaCard extends Component {
     }
 
     handleMouseEnter(){
+       
         if(this.state.video_src != null){
+            if(this.state.disable != "true")
+                return
             this.refs.vidRef.play();
         }else{
             this.setState({ video_src: this.state.src },()=>{this.refs.vidRef.play()});
@@ -51,6 +55,8 @@ class MediaCard extends Component {
     }
 
     handleMouseLeave(){
+        if(this.state.disable != "true")
+            return
         if(this.state.video_src != null){
             this.refs.vidRef.pause();
         }

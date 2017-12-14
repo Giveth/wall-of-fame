@@ -12,7 +12,7 @@ class CampaignsVideosViewer extends Component {
     var _week = props.match.params.week;
     var _id = props.match.params.id;
 
-    var _video_ref = "GVWOF/" + _week + "/" + _id
+    var _video_ref = "GVWOF_v2/" + _id
 
     this.state = {
       databaseRef: firebase.database().ref(_video_ref),
@@ -36,7 +36,7 @@ class CampaignsVideosViewer extends Component {
       return
 
     newMedia.push({
-      id: this.state.id, title: mediadata.name, src: mediadata.src, type: mediadata.type, ipfs: mediadata.ipfs, description: mediadata.description, timestamp: mediadata.timestamp, week: mediadata.week
+      id: this.state.id, title: mediadata.title, src: mediadata.src, type: mediadata.type, ipfs: mediadata.ipfs, description: mediadata.description, timestamp: mediadata.timestamp, week: mediadata.week
     });
 
 
@@ -53,6 +53,7 @@ class CampaignsVideosViewer extends Component {
       return (
         <div id="media-campaigns-view">
           <div className="container-fluid col-lg-6 col-md-auto reduced-padding  page-layout one-card ">
+          <h1>{this.state.media[0].title}</h1>
             <MediaCard
               key={this.state.media[0].id}
               id={this.state.media[0].id}
@@ -63,6 +64,7 @@ class CampaignsVideosViewer extends Component {
               description={this.state.media[0].description}
               timestamp={this.state.media[0].timestamp}
               week={this.state.media[0].week}
+              disableAutoplay="true"
             />
           </div>
         </div>
