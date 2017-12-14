@@ -15,7 +15,7 @@ class MediaCard extends Component {
             description: props.description,
             hideTimer: null,
             _overlay: null,
-            date: new Date(props.timestamp).toString(),
+            date: props.date,
             video_src: null
         }
     }
@@ -62,7 +62,8 @@ class MediaCard extends Component {
                 <div className="VideoWrapper" onMouseMove={this.onMouseMove}  onMouseEnter={this.handleMouseEnter.bind(this)} onMouseLeave={this.handleMouseLeave.bind(this)}> 
                     <div className="overlayContainer" ref={ref => this._overlay = ref} onMouseMove={this.onMouseMove} >
                         <div>
-                            <h4 className="overlayTitle">{this.props.title}</h4>
+                            <h4 className="overlayTitle">{this.props.title} </h4>
+                            <div className="overlayDate">{this.props.date}</div>
                         </div>
                     </div>
                     <video ref="vidRef" poster={poster} controls muted loop src={this.state.video_src} className="card-img .embed-responsive-item" />

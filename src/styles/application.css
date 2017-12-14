@@ -100,6 +100,10 @@ html {
   font-size: 10px; }
   .overview-card .VideoWrapper .overlayContainer .overlayTitle {
     color: white; }
+  .overview-card .VideoWrapper .overlayContainer .overlayDate {
+    color: white;
+    font-size: 10px;
+    text-align: center; }
 
 .overview-card .VideoWrapper video {
   width: 100%;
