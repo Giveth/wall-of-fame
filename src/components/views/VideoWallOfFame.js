@@ -289,6 +289,8 @@ class VideoWallOfFame extends Component {
                             <br />
                             <strong>Description: </strong><br /> {media.description}
                             <br /> <br />
+                            <Link to={"/view/" + media.id}>Link</Link>
+                            <br /> <br />
                             <a href={media.src}>Firebase Link</a>
                             <br /> <br />
                             <a href={media.src}>IPFS Link</a>

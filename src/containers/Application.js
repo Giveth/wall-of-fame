@@ -8,7 +8,7 @@ import MainMenu from './../components/MainMenu'
 
 // views
 import VideoWallOfFame from './../components/views/VideoWallOfFame.js'
-//import CampaignsVideosViewer from './../components/views/CampaignsVideosViewer.js'
+import CampaignsVideosViewer from './../components/views/CampaignsVideosViewer.js'
 import MediaCaptureiOS from './../components/views/MediaCapture_iOS.js'
 import MediaCaptureWeb from './../components/views/MediaCapture_Web.js'
 
@@ -39,6 +39,7 @@ class Application extends Component {
                     <Route exact path="/new/:week/:wall?" component={(props) => (<MediaCaptureWeb appState={'value'} isNew={true} {...props} />)} />
                   )
               }
+              <Route exact path="/view/:id" component={(props) => (<CampaignsVideosViewer {...props} />)} />
               <Route exact path="/" component={(props) => (<VideoWallOfFame {...props} />)} />
               <Route exact path="/:wall" component={(props) => (<VideoWallOfFame {...props} />)} />
               <Route exact path="/:wall/:week" component={(props) => (<VideoWallOfFame {...props} />)} />
