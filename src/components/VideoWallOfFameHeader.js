@@ -70,8 +70,8 @@ class VideoWallOfFameHeader extends Component {
                     <center>
                         <h3>Together we will save the world!</h3>
                         <div>
-                            <a className="btn btn-success" href="https://giveth.slack.com/" target="_blank" rel="noopener noreferrer">
-                                <i className="fa fa-slack"></i>
+                            <a className="btn btn-success" href="http://join.giveth.io/" target="_blank" rel="noopener noreferrer">
+                                <i className="fa fa-comment-o"></i>
                                 &nbsp;Join Giveth
                         </a>
                         </div>
