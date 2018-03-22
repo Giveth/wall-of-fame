@@ -26,7 +26,7 @@ for full list of dependencies see yarn.lock
 `yarn`
 
 --------
-# REACT documentation
+## REACT documentation
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
