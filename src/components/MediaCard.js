@@ -72,7 +72,7 @@ class MediaCard extends Component {
                             <div className="overlayDate">{this.props.date}</div>
                         </div>
                     </div>
-                    <video ref="vidRef" poster={poster} controls muted loop src={this.state.video_src} className="card-img .embed-responsive-item" />
+                    <video ref="vidRef" poster={poster} controls muted loop src={this.state.video_src} className=".embed-responsive-item" />
                 </div>
             </div>
         )

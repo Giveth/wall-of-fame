@@ -1,5 +1,9 @@
 // Card used in campaign / milestone views
 .overview-card {
+    padding: .5rem .5rem .25rem .5rem;
+    box-shadow: 1px 1px 10px 0 rgba(0, 0, 0, .25);
+    border-radius: 0px;
+    cursor: pointer;
     .VideoWrapper{
       .overlayContainer{
           position: absolute;

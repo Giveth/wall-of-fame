@@ -274,7 +274,7 @@ class VideoWallOfFame extends Component {
 
           <div className="container-fluid page-layout reduced-padding" >
 
-            <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3, 1024: 3, 1470: 4 }} >
+            <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3, 1024: 3, 1470: 3 }} >
               <Masonry className="video-card" columnsCount={1} gutter="10px" >
                 {this.state.media.map((media) => {
                   return (
