@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import poster from '../img/giveth.png' // relative path to image 
+// import poster from '../img/giveth.png' // relative path to image 
 
 class MediaCard extends Component {
 
@@ -72,7 +72,7 @@ class MediaCard extends Component {
                             <div className="overlayDate">{this.props.date}</div>
                         </div>
                     </div>
-                    <video ref="vidRef" poster={poster} controls muted loop src={this.state.video_src} className="card-img .embed-responsive-item" />
+                    <video ref="vidRef" controls={this.state.video_src} muted loop src={this.state.src} className="card-img .embed-responsive-item" />
                 </div>
             </div>
         )
