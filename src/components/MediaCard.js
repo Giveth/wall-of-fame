@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import poster from '../img/giveth.png' // relative path to image 
+// import poster from '../img/giveth.png' // relative path to image 
 
 class MediaCard extends Component {
 
