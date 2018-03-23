@@ -64,7 +64,7 @@ class CampaignsVideosViewer extends Component {
               description={this.state.media[0].description}
               timestamp={this.state.media[0].timestamp}
               week={this.state.media[0].week}
-              disableAutoplay="true"
+              autoplay="true"
             />
           </div>
         </div>

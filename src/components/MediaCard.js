@@ -30,16 +30,18 @@ class MediaCard extends Component {
     }
 
     triggerMouseMove = () => {
-        this._overlay.style.opacity = "1";
+        if (!this.props.autoplay) {
+            this._overlay.style.opacity = "1";
 
-        if (this.hideTimer)
-            clearTimeout(this.hideTimer);
-        this.hideTimer = setTimeout(() => {
-
-            if (this._overlay) {
-                this._overlay.style.opacity = "0";
-            }
-        }, 1000);
+            if (this.hideTimer)
+                clearTimeout(this.hideTimer);
+            this.hideTimer = setTimeout(() => {
+    
+                if (this._overlay) {
+                    this._overlay.style.opacity = "0";
+                }
+            }, 1000);
+        }
     }
 
     handleMouseEnter(){
@@ -49,7 +51,7 @@ class MediaCard extends Component {
                 return
             this.refs.vidRef.play();
         }else{
-            this.setState({ video_src: this.state.src },()=>{this.refs.vidRef.play()});
+            this.setState({ video_src: this.state.src }, () => {this.refs.vidRef.play()});
         }
        
     }
@@ -63,16 +65,26 @@ class MediaCard extends Component {
     }
 
     render() {
+        const { autoplay, muted } = this.props
         return (
             <div className="card overview-card">
                 <div className="VideoWrapper" onMouseMove={this.onMouseMove}  onMouseEnter={this.handleMouseEnter.bind(this)} onMouseLeave={this.handleMouseLeave.bind(this)}> 
-                    <div className="overlayContainer" ref={ref => this._overlay = ref} onMouseMove={this.onMouseMove} >
+                    {!autoplay && (<div className="overlayContainer" ref={ref => this._overlay = ref} onMouseMove={this.onMouseMove} >
                         <div>
                             <h4 className="overlayTitle">{this.props.title} </h4>
                             <div className="overlayDate">{this.props.date}</div>
                         </div>
-                    </div>
-                    <video ref="vidRef" controls={this.state.video_src} muted loop src={this.state.src} className="card-img .embed-responsive-item" />
+                    </div>)}
+                    <video
+                        ref="vidRef"
+                        autoPlay={autoplay}
+                        poster={poster}
+                        controls
+                        muted={muted}
+                        loop
+                        src={autoplay ? this.state.src : this.state.video_src}
+                        className="card-img .embed-responsive-item"
+                    />
                 </div>
             </div>
         )

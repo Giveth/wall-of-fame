@@ -157,6 +157,7 @@ class VideoWallOfFame extends Component {
                             timestamp={media.timestamp}
                             week={media.week}
                             date={moment(media.timestamp).format("HH:mm DD-MM-YYYY")}
+                            muted={true}
                           />
                         </div>
 
