@@ -285,7 +285,9 @@ class VideoWallOfFame extends Component {
 
     return (
       <div>
+        {/**Hiding the Header 
         <VideoWallOfFameHeader />
+        **/}
 
         {this.state.wall !== "" && (
           <center>
