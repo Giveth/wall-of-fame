@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import firebase from 'firebase';
-import { isMobile } from '../lib/platformChecker'
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import firebase from "firebase";
+import { isMobile } from "../lib/platformChecker";
 
 // components
-import MainMenu from './../components/MainMenu'
+import MainMenu from "./../components/MainMenu";
 
 // views
-import VideoWallOfFame from './../components/views/VideoWallOfFame.js'
-import CampaignsVideosViewer from './../components/views/CampaignsVideosViewer.js'
-import MediaCaptureiOS from './../components/views/MediaCapture_iOS.js'
-import MediaCaptureWeb from './../components/views/MediaCapture_Web.js'
+import VideoWallOfFame from "./../components/views/VideoWallOfFame.js";
+import CampaignsVideosViewer from "./../components/views/CampaignsVideosViewer.js";
+import MediaCaptureiOS from "./../components/views/MediaCapture_iOS.js";
+import MediaCaptureWeb from "./../components/views/MediaCapture_Web.js";
 
 var config = {
   apiKey: "AIzaSyAGO0q7WjakjW2vNyxIVThAVPWxm-xozj8",
@@ -25,26 +25,58 @@ firebase.initializeApp(config);
 class Application extends Component {
   render() {
     return (
-      <Router basename="/GivethVWOF_v2">
+      <Router basename="/">
         <div>
           <MainMenu />
           <div>
             {/* Routes are defined here. Persistent data is set as props on components */}
             <Switch>
-              {
-                isMobile.any() ?
-                  (
-                    <Route exact path="/new/:week/:wall?" component={(props) => (<MediaCaptureiOS appState={'value'} isNew={true} {...props} />)} />
-                  ) : (
-                    <Route exact path="/new/:week/:wall?" component={(props) => (<MediaCaptureWeb appState={'value'} isNew={true} {...props} />)} />
-                  )
-              }
-              <Route exact path="/view/:id" component={(props) => (<CampaignsVideosViewer {...props} />)} />
-              <Route exact path="/" component={(props) => (<VideoWallOfFame {...props} />)} />
-              <Route exact path="/:week" component={(props) => (<VideoWallOfFame {...props} />)} />
-              <Route exact path="/:week/:tags" component={(props) => (<VideoWallOfFame {...props} />)} />
+              {isMobile.any() ? (
+                <Route
+                  exact
+                  path="/new/:week/:wall?"
+                  component={props => (
+                    <MediaCaptureiOS
+                      appState={"value"}
+                      isNew={true}
+                      {...props}
+                    />
+                  )}
+                />
+              ) : (
+                <Route
+                  exact
+                  path="/new/:week/:wall?"
+                  component={props => (
+                    <MediaCaptureWeb
+                      appState={"value"}
+                      isNew={true}
+                      {...props}
+                    />
+                  )}
+                />
+              )}
+              <Route
+                exact
+                path="/view/:id"
+                component={props => <CampaignsVideosViewer {...props} />}
+              />
+              <Route
+                exact
+                path="/"
+                component={props => <VideoWallOfFame {...props} />}
+              />
+              <Route
+                exact
+                path="/:week"
+                component={props => <VideoWallOfFame {...props} />}
+              />
+              <Route
+                exact
+                path="/:week/:tags"
+                component={props => <VideoWallOfFame {...props} />}
+              />
               {/* <Route exact path="/:wall/:week" component={(props) => (<VideoWallOfFame {...props} />)} /> */}
-
 
               {/* <Route exact path="/:week" component={VideoWallOfFame} />
               {
@@ -63,7 +95,6 @@ class Application extends Component {
               )
               }
               <Route exact path="/view/:week/:id/" component={CampaignsVideosViewer} /> */}
-
             </Switch>
           </div>
         </div>
