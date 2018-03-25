@@ -87,6 +87,12 @@ class VideoWallOfFame extends Component {
       })
     })
 
+    if (!index) {
+      index = 0
+      previous = mediaList[1][0].week
+      this.state.week = mediaList[0][0].week
+    }
+
     this.setState({
       media: mediaList,
       currentMedia: this.state.wall ? mediaList[index].filter((video) => video.wall === this.state.wall) : mediaList[index],
