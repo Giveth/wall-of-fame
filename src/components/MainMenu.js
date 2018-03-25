@@ -5,9 +5,9 @@ import logo from "./../img/wall-of-fame-logo.svg";
 class MainMenu extends Component {
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark">
+      <nav className="navbar navbar-expand-lg navbar-dark mainNav">
         <Link className="navbar-brand" to="/">
-          <img src={logo} alt="Giveth logo" width="250px" height="auto" />
+          <img src={logo} alt="Giveth logo" width="250px" height="auto" className="navLogo" />
         </Link>
 
         {/*

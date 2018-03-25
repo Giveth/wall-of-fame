@@ -137,27 +137,22 @@ class VideoWallOfFame extends Component {
       </center>
     );
     const date = this.state.week.split("_")
+    const { next, previous } = this.state
     return (
       <div>
         {/**Hiding the Header 
         <VideoWallOfFameHeader />
         **/}
 
-          <center>
-            <div className="container spacer-top-35">
-              <div className="row">
-                <div className="col">
-                  {this.state.next && (<Link to={this.state.next}>Next week</Link>)}
-                </div>
-                <div className="col">
-                  <p>{"WEEK " + date[0] + ' - ' + date[2]}</p>
-                </div>
-                <div className="col">
-                  {this.state.previous && (<Link to={this.state.previous}>Previous week</Link>)}
-                </div>
-              </div>
-            </div>
-          </center>
+        <div className="weekNav">
+          <div className={next ? "next-prev-button" : ''}>
+            {next && (<Link to={next} style={{color: 'white', textDecoration: 'none'}}>Next week</Link>)}
+          </div>
+          <div style={{fontSize: '28px', fontWeight: '700', color: '#2c0d54'}}>{"WEEK " + date[0] + ' - ' + date[2]}</div>
+          <div className={previous ? "next-prev-button" : ''}>
+            {previous && (<Link to={previous} style={{color: 'white', textDecoration: 'none'}}>Previous week</Link>)}
+          </div>
+        </div>
 
         <div className="container-fluid">
           <ResponsiveMasonry
