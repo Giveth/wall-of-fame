@@ -9,6 +9,7 @@ class MainMenu extends Component {
         <Link className="navbar-brand" to="/">
           <img src={logo} alt="Giveth logo" width="250px" height="auto" />
         </Link>
+
         {/*
         <button
           className="navbar-toggler"
@@ -22,7 +23,7 @@ class MainMenu extends Component {
           <span className="navbar-toggler-icon" />
         </button>
 
-        {/* <div className="collapse navbar-collapse" id="navbarSupportedContent">
+         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
                             <Link className="nav-link" to="/Giveth_Daily">Giveth Daily</Link>
