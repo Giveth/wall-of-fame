@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 // import poster from '../img/giveth.png' // relative path to image
 
 class MediaCard extends Component {
@@ -15,13 +16,17 @@ class MediaCard extends Component {
       hideTimer: null,
       _overlay: null,
       date: props.date,
-      video_src: null,
+      showControls: null,
       disable: props.disable
     };
   }
 
   onClick = e => {
-    console.log("on click");
+    this.refs.vidRef.webkitRequestFullScreen()
+    this.refs.vidRef.pause();
+    this.refs.vidRef.currentTime = 0;
+    this.refs.vidRef.muted = false;
+    this.refs.vidRef.play();
   };
 
   onMouseMove = e => {
@@ -30,34 +35,20 @@ class MediaCard extends Component {
 
   triggerMouseMove = () => {
     this._overlay.style.opacity = "1";
-
-    if (this.hideTimer) clearTimeout(this.hideTimer);
-    this.hideTimer = setTimeout(() => {
-      if (this._overlay) {
-        this._overlay.style.opacity = "0";
-      }
-    }, 1000);
   };
 
   handleMouseEnter() {
-    if (this.state.video_src != null) {
-      if (this.state.disable != "true") return;
-      this.refs.vidRef.play();
-    } else {
-      this.setState({ video_src: this.state.src }, () => {
-        this.refs.vidRef.play();
-      });
-    }
+    this.setState({ showControls: true })
+    this.refs.vidRef.play();
   }
 
   handleMouseLeave() {
-    if (this.state.disable != "true") return;
-    if (this.state.video_src != null) {
-      this.refs.vidRef.pause();
-    }
+    this.refs.vidRef.pause();
+    this._overlay.style.opacity = "0";
   }
 
   render() {
+    const { muted, title, date, description, week, wall, src, id } = this.props
     return (
       <div className="card overview-card">
         <div
@@ -71,19 +62,28 @@ class MediaCard extends Component {
             ref={ref => (this._overlay = ref)}
             onMouseMove={this.onMouseMove}
           >
-            <div>
-              <h4 className="overlayTitle">{this.props.title} </h4>
-              <div className="overlayDate">{this.props.date}</div>
+            <div className="title">{title}</div>
+            <div className="date"><span className="fa fa-clock-o" aria-hidden="true"></span> {date}</div>
+            <div className="description">{description}</div>
+            <div className="week-wall-container">
+              <div className="week-wall"><span className="fa fa-clock-o" aria-hidden="true"></span> {'WEEK: ' + week.split("_")[0]}</div>
+              <div className="week-wall"><span className="fa fa-th-large" aria-hidden="true"></span> {'WALL: ' + wall.split("_").join(' ')}</div>
+            </div>
+            <div className="watch-button" onClick={this.onClick}>Watch <span className="fa fa-video-camera" aria-hidden="true"></span></div>
+            <div className="download-button-container">
+              <a href={src} style={{flex: 1, textDecoration: 'none'}}><div className="download-button" style={{marginRight: '1rem'}}>Firebase <span className="fa fa-database" aria-hidden="true"></span></div></a>
+              <a href={src} style={{flex: 1, textDecoration: 'none'}}><div className="download-button" style={{marginLeft: '1rem'}}>Ipfs <span className="fa fa-cube" aria-hidden="true"></span></div></a>
             </div>
           </div>
-          <video
+          <div><video
             ref="vidRef"
-            controls={this.state.video_src}
-            muted
+            controls={this.state.showControls}
+            muted={muted}
             loop
             src={this.state.src}
-            className="card-img .embed-responsive-item"
+            onClick={this.onClick}
           />
+          </div>
         </div>
       </div>
     );

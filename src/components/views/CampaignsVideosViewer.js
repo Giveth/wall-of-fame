@@ -15,7 +15,7 @@ class CampaignsVideosViewer extends Component {
     this.state = {
       databaseRef: firebase.database().ref(_video_ref),
       id: _id,
-      media: []
+      media: null
     };
   }
 
@@ -26,23 +26,9 @@ class CampaignsVideosViewer extends Component {
 
   //get the data from the firebase and push them out
   gotData = data => {
-    var newMedia = [];
-
     const mediadata = data.val();
     if (!mediadata) return;
-
-    newMedia.push({
-      id: this.state.id,
-      title: mediadata.title,
-      src: mediadata.src,
-      type: mediadata.type,
-      ipfs: mediadata.ipfs,
-      description: mediadata.description,
-      timestamp: mediadata.timestamp,
-      week: mediadata.week
-    });
-
-    this.setState({ media: newMedia });
+    this.setState({ media: mediadata });
   };
 
   errData = err => {
@@ -50,21 +36,14 @@ class CampaignsVideosViewer extends Component {
   };
 
   render() {
-    if (this.state.media.length > 0) {
+    const media = this.state.media
+    if (media) {
       return (
         <div id="media-campaigns-view">
           <div className="container-fluid col-lg-6 col-md-auto reduced-padding  page-layout one-card ">
-            <h1>{this.state.media[0].title}</h1>
+            <h1>{media.title}</h1>
             <MediaCard
-              key={this.state.media[0].id}
-              id={this.state.media[0].id}
-              title={this.state.media[0].title}
-              src={this.state.media[0].src}
-              type={this.state.media[0].type}
-              ipfs={this.state.media[0].ipfs}
-              description={this.state.media[0].description}
-              timestamp={this.state.media[0].timestamp}
-              week={this.state.media[0].week}
+              {...media}
               autoplay="true"
             />
           </div>
