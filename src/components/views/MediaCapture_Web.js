@@ -708,6 +708,7 @@ class MediaCapture_Web extends Component {
               />
             </div>
 
+            {/*
             <div className="form-group">
               <button
                 className="btn btn-success"
@@ -724,6 +725,7 @@ class MediaCapture_Web extends Component {
                 Stop Record
               </button>
             </div>
+            */}
 
             <div
               className="form-group"
