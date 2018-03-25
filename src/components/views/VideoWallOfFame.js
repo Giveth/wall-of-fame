@@ -12,268 +12,122 @@ import VideoWallOfFameHeader from "../VideoWallOfFameHeader";
 
 class VideoWallOfFame extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     var _wall = "";
-    var _currentweek = moment().format("WW_MM_YYYY");
+    var _currentweek = moment().format("WW_MM_YYYY")
     var _week = "";
-    var _hasMore = true;
 
     if (!props.match.params.week) {
-      _week = _currentweek;
+      _week = _currentweek
     } else {
-      _week = props.match.params.week;
+      _week = props.match.params.week
     }
 
     if (props.match.params.wall) {
-      _wall = props.match.params.wall;
-    }
-
-    var _ref = null;
-    var _ref_next = null;
-    var _ref_prev = null;
-
-    if (_wall === "") {
-      _ref = firebase
-        .database()
-        .ref("GVWOF_v2/")
-        .orderByKey()
-        .limitToLast(8);
-    } else {
-      _ref = firebase
-        .database()
-        .ref("GVWOF_v2/")
-        .orderByChild("week")
-        .equalTo(_week);
+      _wall = props.match.params.wall
     }
 
     this.state = {
-      databaseRef: _ref,
       media: [],
-      referenceToOldestKey: "",
-      hasMore: _hasMore,
+      currentMedia: [],
       wall: _wall,
       currentweek: _currentweek,
       week: _week,
       previous: null,
-      next: null
-    };
-
-    _ref.on("value", this.gotData, err => {
-      console.log(err);
-    });
-
-    if (_ref_next && _ref_prev) {
+      next: null,
     }
   }
 
   componentDidMount() {
-    if (this.state.wall !== "") {
-      var _previus = moment()
-        .weeks(this.state.week.split("_")[0])
-        .add(-1, "w")
-        .format("WW_MM_YYYY");
-      var _next = moment()
-        .weeks(this.state.week.split("_")[0])
-        .add(+1, "w")
-        .format("WW_MM_YYYY");
-      firebase
-        .database()
-        .ref("GVWOF_v2/")
-        .orderByChild("week")
-        .endAt(_previus)
-        .on("value", this.getPreviousWeek);
-      firebase
-        .database()
-        .ref("GVWOF_v2/")
-        .orderByChild("week")
-        .startAt(_next)
-        .on("value", this.getNextWeek);
-    }
+    const ref = firebase.database().ref("GVWOF_v2/")
+    ref.on('value', this.gotData, (err) => console.log(err));
   }
 
-  getPreviousWeek = data => {
-    var mediadata = data.val();
+  gotData = (data) => {
+    const mediaData = data.val()
 
-    console.log(mediadata);
-
-    if (!mediadata || mediadata === null || !this.state) {
-      this.setState({
-        previous: null
-      });
-      return;
+    const media = []
+    for (let key in mediaData) {
+      const video = mediaData[key]
+      const date = video.week.split('_')
+      video.weekYear = date[2] + date[0]
+      video.id = key
+      media.push(video)
     }
+    media.sort((a, b) => {
+      return b.weekYear - a.weekYear
+    })
 
-    var keys = Object.keys(data.val());
-    console.log(keys.reverse());
-
-    for (var i = 0; i < keys.length; i++) {
-      const k = keys[i];
-      if (!mediadata[k] || !this.state) continue;
-
-      if (mediadata[k].wall === this.state.wall) {
-        console.log(mediadata[k].week);
-        this.setState({
-          previous: mediadata[k].week
-        });
-        return;
+    let cache
+    let counter = -1
+    let mediaList = []
+    media.forEach((video) => {
+      const timestamp = video.weekYear
+      if (timestamp === cache) {
+        mediaList[counter].push(video)
+      } else {
+        mediaList.push([video])
+        counter++
       }
-    }
+      cache = timestamp
+    })
+
+    let index, previous, next
+    mediaList.forEach((list, idx) => {
+      if (previous || next) {
+        return
+      }
+      list.forEach((video) => {
+        if (video.week === this.state.week) {
+          index = idx
+          previous = mediaList[idx + 1] ? mediaList[idx + 1][0].week : null
+          next = mediaList[idx - 1] ? mediaList[idx - 1][0].week : null
+        }
+      })
+    })
 
     this.setState({
-      previous: null
-    });
-  };
-
-  getNextWeek = data => {
-    var mediadata = data.val();
-    console.log(mediadata);
-
-    if (!mediadata || mediadata === null || !this.state) {
-      this.setState({
-        next: null
-      });
-      return;
-    }
-
-    var keys = Object.keys(data.val());
-    console.log(keys);
-
-    for (var i = 0; i < keys.length; i++) {
-      const k = keys[i];
-      if (mediadata[k].wall === this.state.wall) {
-        console.log(mediadata[k].week);
-        this.setState({
-          next: mediadata[k].week
-        });
-        return;
-      }
-    }
-
-    this.setState({
-      next: null
-    });
-  };
+      media: mediaList,
+      currentMedia: this.state.wall ? mediaList[index].filter((video) => video.wall === this.state.wall) : mediaList[index],
+      previous,
+      next,
+    })
+  }
 
   componentWillReceiveProps(newProps) {
-    var _week = "";
-    var _wall = "";
+    var week = "";
+    var wall = "";
 
     if (!newProps.match.params.week) {
-      _week = moment().format("WW_MM_YYYY");
+      week = moment().format("WW_MM_YYYY")
     } else {
-      _week = newProps.match.params.week;
+      week = newProps.match.params.week
     }
 
     if (newProps.match.params.wall) {
-      _wall = newProps.match.params.wall;
+      wall = newProps.match.params.wall
     }
 
-    var _ref = null;
-
-    if (_wall === "") {
-      _ref = firebase
-        .database()
-        .ref("GVWOF_v2/")
-        .orderByKey()
-        .limitToLast(8);
-    } else {
-      _ref = firebase
-        .database()
-        .ref("GVWOF_v2/")
-        .orderByChild("week")
-        .equalTo(_week);
-    }
-
-    this.setState(
-      { wall: _wall, week: _week, databaseRef: _ref, media: [] },
-      function() {
-        _ref.on("value", this.gotData, err => {
-          console.log(err);
-        });
-
-        var _previus = moment()
-          .weeks(_week.split("_")[0])
-          .add(-1, "w")
-          .format("WW_MM_YYYY");
-        var _next = moment()
-          .weeks(_week.split("_")[0])
-          .add(+1, "w")
-          .format("WW_MM_YYYY");
-
-        firebase
-          .database()
-          .ref("GVWOF_v2/")
-          .orderByChild("week")
-          .endAt(_previus)
-          .on("value", this.getPreviousWeek.bind(this));
-        firebase
-          .database()
-          .ref("GVWOF_v2/")
-          .orderByChild("week")
-          .startAt(_next)
-          .on("value", this.getNextWeek.bind(this));
-      }
-    );
-  }
-
-  //get the data from the firebase and push them out
-  gotData = data => {
-    var newMedia = this.state.media;
-
-    const mediadata = data.val();
-
-    console.log(mediadata);
-
-    if (!mediadata) return;
-
-    var keys = Object.keys(mediadata).reverse();
-    if (newMedia.length !== 0) {
-      keys = Object.keys(mediadata)
-        .reverse()
-        .slice(1);
-    }
-
-    if (keys.length < 5) {
-      this.setState({ hasMore: false });
-    }
-
-    var _referenceToOldestKey = Object.keys(mediadata)[0];
-
-    for (var i = 0; i < keys.length; i++) {
-      const k = keys[i];
-      if (mediadata[k].wall === this.state.wall || this.state.wall === "") {
-        newMedia.push({
-          id: keys[i],
-          title: mediadata[k].title,
-          src: mediadata[k].src,
-          type: mediadata[k].type,
-          ipfs: mediadata[k].ipfs,
-          description: mediadata[k].description,
-          timestamp: mediadata[k].timestamp,
-          wall: mediadata[k].wall,
-          week: mediadata[k].week
-        });
-      }
-    }
-
-    this.setState(
-      {
-        media: newMedia,
-        referenceToOldestKey: _referenceToOldestKey
-      },
-      function() {
-        if (newMedia.length === 0 && keys.length >= 5) {
-          this.loadItems();
+    let index, next, previous
+    const media = this.state.media
+    media.forEach((list, idx) => {
+      list.forEach((video) => {
+        if (video.week === week) {
+          index = idx
+          previous = media[idx + 1] ? media[idx + 1][0].week : null
+          next = media[idx - 1] ? media[idx - 1][0].week : null
         }
-      }
-    );
-  };
+      })
+    })
 
-  loadItems() {
-    if (this.state.wall === "") {
-      //firebase.database().ref("GVWOF_v2/").orderByKey().limitToLast(6).endAt(this.state.referenceToOldestKey).on('value', this.gotData.bind(this), (err) => { console.log(err) });
-    }
+    this.setState({
+      currentMedia: this.state.wall ? this.state.media[index].filter((video) => video.wall === this.state.wall) : this.state.media[index],
+      next,
+      previous,
+      week,
+      wall
+    })
   }
 
   render() {
@@ -282,67 +136,45 @@ class VideoWallOfFame extends Component {
         <div className="loader">No more results...</div>{" "}
       </center>
     );
-
+    const date = this.state.week.split("_")
     return (
       <div>
         {/**Hiding the Header 
         <VideoWallOfFameHeader />
         **/}
 
-        {this.state.wall !== "" && (
           <center>
-            <div className="container">
+            <div className="container spacer-top-35">
               <div className="row">
                 <div className="col">
-                  {this.state.next && (
-                    <Link
-                      className="btn-week"
-                      to={"/" + this.state.wall + "/" + this.state.next}
-                    >
-                      Next week
-                    </Link>
-                  )}
+                  {this.state.next && (<Link to={this.state.next}>Next week</Link>)}
                 </div>
                 <div className="col">
-                  {this.state.wall.split("_").join(" ")}
-                  <br />
-                  {this.state.week.split("_")[1] +
-                    "/" +
-                    this.state.week.split("_")[2]}
-                  <br />
-                  {"Week: " + this.state.week.split("_")[0]}
+                  <p>{"WEEK " + date[0] + ' - ' + date[2]}</p>
                 </div>
                 <div className="col">
-                  {this.state.previous && (
-                    <Link
-                      className="btn-week"
-                      to={"/" + this.state.wall + "/" + this.state.previous}
-                    >
-                      Previous week
-                    </Link>
-                  )}
+                  {this.state.previous && (<Link to={this.state.previous}>Previous week</Link>)}
                 </div>
               </div>
             </div>
           </center>
-        )}
 
-        <div className="container-fluid page-layout reduced-padding">
+        <div className="container-fluid">
           <ResponsiveMasonry
             columnsCountBreakPoints={{
               350: 1,
               750: 2,
               900: 3,
               1024: 3,
-              1470: 4
+              1470: 3
             }}
           >
             <Masonry className="video-card" columnsCount={1} gutter="10px">
-              {this.state.media.map(media => {
+              {this.state.currentMedia && this.state.currentMedia.map(media => {
                 return (
                   // Load each video from the query into a card
                   <div key={media.id + "_dev"}>
-                    <OverlayTrigger
+                    {/* <OverlayTrigger
                       key={media.id + "_OverlayTrigger"}
                       rootClose
                       trigger={["click"]}
@@ -368,25 +200,18 @@ class VideoWallOfFame extends Component {
                           <a href={media.src}>IPFS Link</a>
                         </Popover>
                       }
-                    >
+                    > */}
                       <div>
                         <MediaCard
-                          key={media.id}
-                          id={media.id}
-                          title={media.title}
-                          src={media.src}
-                          type={media.type}
-                          ipfs={media.ipfs}
-                          description={media.description}
-                          timestamp={media.timestamp}
-                          week={media.week}
+                          {...media}
                           date={moment(media.timestamp).format(
                             "HH:mm DD-MM-YYYY"
                           )}
                           muted={true}
+                          autoPlay
                         />
                       </div>
-                    </OverlayTrigger>
+                    {/* </OverlayTrigger> */}
                   </div>
                 );
               })}

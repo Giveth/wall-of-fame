@@ -41,8 +41,9 @@ class Application extends Component {
               }
               <Route exact path="/view/:id" component={(props) => (<CampaignsVideosViewer {...props} />)} />
               <Route exact path="/" component={(props) => (<VideoWallOfFame {...props} />)} />
-              <Route exact path="/:wall" component={(props) => (<VideoWallOfFame {...props} />)} />
-              <Route exact path="/:wall/:week" component={(props) => (<VideoWallOfFame {...props} />)} />
+              <Route exact path="/:week" component={(props) => (<VideoWallOfFame {...props} />)} />
+              <Route exact path="/:week/:tags" component={(props) => (<VideoWallOfFame {...props} />)} />
+              {/* <Route exact path="/:wall/:week" component={(props) => (<VideoWallOfFame {...props} />)} /> */}
 
 
               {/* <Route exact path="/:week" component={VideoWallOfFame} />

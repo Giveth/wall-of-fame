@@ -24,7 +24,6 @@ class VideoWallOfFameHeader extends Component {
     gotData = (data) => {
         var newMedia = this.state.media
         const mediadata = data.val();
-        console.log(mediadata)
 
         if (!mediadata)
             return

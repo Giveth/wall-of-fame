@@ -4,8 +4,8 @@
   justify-content: center;
   width: 100%; }
 
-.spacer-top-50 {
-  margin-top: 50px; }
+.spacer-top-35 {
+  margin-top: 35px; }
 
 .spacer-bottom-50 {
   margin-bottom: 50px; }
@@ -47,11 +47,6 @@ html {
   top: 50%;
   transform: translateY(-50%); }
 
-.video-card > div {
-  max-width: 25%;
-  max-height: 150px;
-  min-width: 350px; }
-
 .go-back-button {
   color: #666666 !important;
   display: block;
@@ -84,34 +79,68 @@ html {
   #wall-of-fame-header .VideoPlayer {
     max-height: 300px; }
 
-.overview-card .VideoWrapper .overlayContainer {
-  position: absolute;
-  height: auto;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
-  text-align: left;
-  transition: opacity 0.5s;
-  opacity: 1;
-  display: block;
-  background: linear-gradient(rgba(80, 99, 119, 0.5), rgba(28, 59, 68, 0.9));
-  padding: 10px;
-  font-size: 10px; }
-  .overview-card .VideoWrapper .overlayContainer .overlayTitle {
-    color: white; }
-  .overview-card .VideoWrapper .overlayContainer .overlayDate {
-    color: white;
+.overview-card {
+  padding: .5rem .5rem .15rem .5rem;
+  box-shadow: 1px 1px 10px 0 rgba(0, 0, 0, 0.25);
+  border-radius: 0px; }
+  .overview-card .VideoWrapper .overlayContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    text-align: left;
+    transition: opacity 0.5s;
+    opacity: 0;
+    display: block;
+    background: rgba(62, 19, 77, 0.8);
+    padding: 10px;
     font-size: 10px;
-    text-align: center; }
-
-.overview-card .VideoWrapper video {
-  width: 100%;
-  height: 100%;
-  z-index: 1; }
-  .overview-card .VideoWrapper video::-webkit-media-controls {
-    z-index: 2;
-    width: 100%; }
+    color: white; }
+    .overview-card .VideoWrapper .overlayContainer .title {
+      color: white; }
+    .overview-card .VideoWrapper .overlayContainer .date {
+      font-size: 10px;
+      margin-bottom: .5rem; }
+    .overview-card .VideoWrapper .overlayContainer .description {
+      font-size: 14px;
+      margin-bottom: .5rem; }
+    .overview-card .VideoWrapper .overlayContainer .week-wall-container {
+      margin-bottom: .5rem; }
+    .overview-card .VideoWrapper .overlayContainer .week-wall {
+      font-size: 12px; }
+    .overview-card .VideoWrapper .overlayContainer .watch-button {
+      color: white;
+      border: 1px solid white;
+      border-radius: 4rem;
+      font-size: 14px;
+      text-align: center;
+      padding: .25rem;
+      text-transform: uppercase;
+      margin-bottom: .5rem;
+      cursor: pointer; }
+    .overview-card .VideoWrapper .overlayContainer .download-button-container {
+      display: flex;
+      justify-content: space-between; }
+    .overview-card .VideoWrapper .overlayContainer .download-button {
+      color: white;
+      border: 1px solid white;
+      border-radius: 4rem;
+      font-size: 14px;
+      text-align: center;
+      padding: .25rem;
+      text-transform: uppercase; }
+    .overview-card .VideoWrapper .overlayContainer .watch-button:hover, .overview-card .VideoWrapper .overlayContainer .download-button:hover {
+      background-color: white;
+      color: rgba(62, 19, 77, 0.8); }
+  .overview-card .VideoWrapper video {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    cursor: pointer; }
+    .overview-card .VideoWrapper video::-webkit-media-controls {
+      z-index: 2;
+      width: 100%; }
 
 html,
 body {
