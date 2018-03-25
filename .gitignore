@@ -4,3 +4,4 @@ node_modules
 npm-debug.log
 yarn-error.log
 /src/styles/application.css
+package-lock.json
