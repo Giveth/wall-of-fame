@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import logo from "./../img/wall-of-fame-logo.svg";
+import logo from "./../img/wall-of-fame-logo-new.svg";
 
 class MainMenu extends Component {
   render() {

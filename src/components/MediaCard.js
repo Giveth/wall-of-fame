@@ -44,6 +44,8 @@ class MediaCard extends Component {
 
   handleMouseLeave() {
     this.refs.vidRef.pause();
+    this.refs.vidRef.controls = false;
+    this.refs.vidRef.muted = true;
     this._overlay.style.opacity = "0";
   }
 
@@ -72,7 +74,7 @@ class MediaCard extends Component {
             <div className="watch-button" onClick={this.onClick}>Watch <span className="fa fa-video-camera" aria-hidden="true"></span></div>
             <div className="download-button-container">
               <a href={src} style={{flex: 1, textDecoration: 'none'}}><div className="download-button" style={{marginRight: '1rem'}}>Firebase <span className="fa fa-database" aria-hidden="true"></span></div></a>
-              <a href={src} style={{flex: 1, textDecoration: 'none'}}><div className="download-button" style={{marginLeft: '1rem'}}>Ipfs <span className="fa fa-cube" aria-hidden="true"></span></div></a>
+              <a href={'/view/' + id} style={{flex: 1, textDecoration: 'none'}}><div className="download-button" style={{marginLeft: '1rem'}}>Share <span className="fa fa-share" aria-hidden="true"></span></div></a>
             </div>
           </div>
           <div><video
