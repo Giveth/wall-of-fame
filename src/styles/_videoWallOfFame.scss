@@ -23,10 +23,14 @@
     color: white;
     background-color: #2c0d54;
     opacity: 1;
-    padding: .5rem 1rem;
-    border-radius: .25rem;
+    padding: .5rem 2rem;
+    border-radius: 2rem;
     box-shadow: 1px 1px 10px 0 rgba(0, 0, 0, .5);
     text-transform: uppercase;
+}
+
+.set-width {
+    width: 180px;
 }
 
 .next-prev-button:hover {
