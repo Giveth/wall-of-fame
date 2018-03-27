@@ -25,7 +25,7 @@ firebase.initializeApp(config);
 class Application extends Component {
   render() {
     return (
-      <Router basename="/">
+      <Router basename="/GivethVWOF_v2">
         <div>
           <MainMenu />
           <div>
