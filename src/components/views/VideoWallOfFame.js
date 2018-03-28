@@ -9,6 +9,7 @@ import { OverlayTrigger, Popover } from "react-bootstrap";
 
 import AddNewMediaButton from "../AddNewMediaButton";
 import VideoWallOfFameHeader from "../VideoWallOfFameHeader";
+import logo from "../../img/wall-of-fame-logo-new.svg";
 
 class VideoWallOfFame extends Component {
   constructor(props) {
@@ -145,10 +146,13 @@ class VideoWallOfFame extends Component {
     const date = this.state.week.split("_")
     const { next, previous } = this.state
     return (
-      <div>
+      <div className="space-top">
         {/**Hiding the Header 
         <VideoWallOfFameHeader />
         **/}
+        <center>
+          <img src={logo} alt="Giveth logo" width="250px" height="auto" className="navLogo" />
+        </center>
 
         <div className="weekNav">
           <div className={next ? "next-prev-button" : 'set-width'}>
