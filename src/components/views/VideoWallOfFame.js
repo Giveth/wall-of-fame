@@ -6,9 +6,11 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import InfiniteScroll from "react-infinite-scroller";
 import moment from "moment";
 import { OverlayTrigger, Popover } from "react-bootstrap";
+import { isMobile } from "../../lib/platformChecker";
 
 import AddNewMediaButton from "../AddNewMediaButton";
 import VideoWallOfFameHeader from "../VideoWallOfFameHeader";
+import logo from "../../img/wall-of-fame-logo-new.svg";
 
 class VideoWallOfFame extends Component {
   constructor(props) {
@@ -28,6 +30,8 @@ class VideoWallOfFame extends Component {
       _wall = props.match.params.wall
     }
 
+    const device = isMobile.any()
+
     this.state = {
       media: [],
       currentMedia: [],
@@ -36,6 +40,7 @@ class VideoWallOfFame extends Component {
       week: _week,
       previous: null,
       next: null,
+      isIphone: device && (device[0] === 'iPhone'),
     }
   }
 
@@ -145,10 +150,13 @@ class VideoWallOfFame extends Component {
     const date = this.state.week.split("_")
     const { next, previous } = this.state
     return (
-      <div>
+      <div className="space-top">
         {/**Hiding the Header 
         <VideoWallOfFameHeader />
         **/}
+        <center>
+          <img src={logo} alt="Giveth logo" width="250px" height="auto" className="navLogo" />
+        </center>
 
         <div className="weekNav">
           <div className={next ? "next-prev-button" : 'set-width'}>
@@ -209,7 +217,7 @@ class VideoWallOfFame extends Component {
                             "HH:mm DD-MM-YYYY"
                           )}
                           muted={true}
-                          autoPlay
+                          autoPlay={this.state.isIphone}
                           showControls={false}
                         />
                       </div>
