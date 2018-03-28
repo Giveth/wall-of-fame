@@ -6,6 +6,7 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import InfiniteScroll from "react-infinite-scroller";
 import moment from "moment";
 import { OverlayTrigger, Popover } from "react-bootstrap";
+import { isMobile } from "../../lib/platformChecker";
 
 import AddNewMediaButton from "../AddNewMediaButton";
 import VideoWallOfFameHeader from "../VideoWallOfFameHeader";
@@ -29,6 +30,8 @@ class VideoWallOfFame extends Component {
       _wall = props.match.params.wall
     }
 
+    const device = isMobile.any()
+
     this.state = {
       media: [],
       currentMedia: [],
@@ -37,6 +40,7 @@ class VideoWallOfFame extends Component {
       week: _week,
       previous: null,
       next: null,
+      isIphone: device && (device[0] === 'iPhone'),
     }
   }
 
@@ -213,7 +217,7 @@ class VideoWallOfFame extends Component {
                             "HH:mm DD-MM-YYYY"
                           )}
                           muted={true}
-                          autoPlay
+                          autoPlay={this.state.isIphone}
                           showControls={false}
                         />
                       </div>

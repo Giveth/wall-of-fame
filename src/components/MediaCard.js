@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 // import poster from '../img/giveth.png' // relative path to image
 import * as Clipboard from 'clipboard';
+import fscreen from 'fscreen';
+
 new Clipboard('.copy-to-clipboard');
+
 
 class MediaCard extends Component {
   constructor(props) {
@@ -24,7 +27,7 @@ class MediaCard extends Component {
   }
 
   onClick = e => {
-    this.refs.vidRef.webkitRequestFullScreen()
+    fscreen.requestFullscreen(this.refs.vidRef);
     this.refs.vidRef.pause();
     this.refs.vidRef.currentTime = 0;
     this.refs.vidRef.muted = false;
@@ -52,7 +55,7 @@ class MediaCard extends Component {
   }
 
   render() {
-    const { muted, title, date, description, week, wall, src, id } = this.props
+    const { muted, title, date, description, week, wall, src, id, autoPlay } = this.props
     return (
       <div className="card overview-card">
         <div
@@ -95,6 +98,7 @@ class MediaCard extends Component {
             loop
             src={this.state.src}
             onClick={this.onClick}
+            autoplay={autoPlay}
           />
           </div>
         </div>

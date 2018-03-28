@@ -39,7 +39,7 @@ class CampaignsVideosViewer extends Component {
     const media = this.state.media
     if (media) {
       return (
-        <div id="media-campaigns-view">
+        <div id="media-campaigns-view" className="space-top">
           <div className="container-fluid col-lg-6 col-md-auto reduced-padding  page-layout one-card ">
             <h1>{media.title}</h1>
             <MediaCard
@@ -51,13 +51,10 @@ class CampaignsVideosViewer extends Component {
       );
     } else {
       return (
-        <div id="media-campaigns-view">
-          <div className="container-fluid page-layout reduced-padding">
-            <div className="card-columns">
-              <p className="text-center">Loading or empty...</p>
-            </div>
-            <AddNewMediaButton week={this.state.week} />
-          </div>
+        <div className="space-top">
+          <center>
+            <p className="text-center">Loading or empty...</p>
+          </center>
         </div>
       );
     }
