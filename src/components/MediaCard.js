@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 // import poster from '../img/giveth.png' // relative path to image
+import * as Clipboard from 'clipboard';
+new Clipboard('.copy-to-clipboard');
 
 class MediaCard extends Component {
   constructor(props) {
@@ -74,7 +76,16 @@ class MediaCard extends Component {
             <div className="watch-button" onClick={this.onClick}>Watch <span className="fa fa-video-camera" aria-hidden="true"></span></div>
             <div className="download-button-container">
               <a href={src} style={{flex: 1, textDecoration: 'none'}}><div className="download-button" style={{marginRight: '1rem'}}>Firebase <span className="fa fa-database" aria-hidden="true"></span></div></a>
-              <a href={'/view/' + id} style={{flex: 1, textDecoration: 'none'}}><div className="download-button" style={{marginLeft: '1rem'}}>Share <span className="fa fa-share" aria-hidden="true"></span></div></a>
+              <div style={{flex: 1, textDecoration: 'none'}}>
+                <div
+                  className="download-button copy-to-clipboard tooltipped tooltipped-s"
+                  style={{marginLeft: '1rem'}}
+                  data-clipboard-text={"https://fame.giveth.io/view/" + id}
+                  aria-label="Copied link to clipboard!"
+                >
+                  Share <span className="fa fa-share" aria-hidden="true"></span>
+                </div>
+              </div>
             </div>
           </div>
           <div><video
