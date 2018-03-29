@@ -58,7 +58,9 @@ class MediaCapture_Web extends Component {
       title: "",
       description: "",
       week: _week,
-      wall: _wall
+      wall: _wall,
+      socialHandle: "",
+      wallet: "",
     };
 
     this.uploadFile = this.uploadFile.bind(this);
@@ -285,6 +287,8 @@ class MediaCapture_Web extends Component {
               timestamp: timestamp,
               week: this.state.week,
               wall: this.state.wall,
+              social: this.state.social,
+              wallet: this.state.wallet,
               ipfs: "http://35.188.240.194:8080/ipfs/" + self.state.ipfsId
             },
             function() {
@@ -555,6 +559,14 @@ class MediaCapture_Web extends Component {
     this.setState({ description: event.target.value });
   }
 
+  onChangeSocialHandle(event) {
+    this.setState({ social: event.target.value });
+  }
+
+  onChangeWallet(event) {
+    this.setState({ wallet: event.target.value });
+  }
+
   render() {
     const history = this.props.history;
 
@@ -580,7 +592,7 @@ class MediaCapture_Web extends Component {
                 className="alert-link"
               >
                 Chrome extension
-              </a>{" "}
+              </a>
               and reload
             </div>
 
@@ -609,6 +621,30 @@ class MediaCapture_Web extends Component {
               />
             </div>
             <div className="form-group">
+              <label>Slack/Riot handle:</label>
+              <input
+                className="form-control"
+                name="description"
+                id="description-input"
+                type="text"
+                value={this.state.socialHandle}
+                onChange={this.onChangeSocialHandle.bind(this)}
+                placeholder="What's your name on Slack/Riot.im?"
+              />
+            </div>
+            <div className="form-group">
+              <label>Public wallet address (Metamask, MEW,...)</label>
+              <input
+                className="form-control"
+                name="description"
+                id="description-input"
+                type="text"
+                value={this.state.wallet}
+                onChange={this.onChangeWallet.bind(this)}
+                placeholder="Provide wallet address to e.g. get rewarded"
+              />
+            </div>
+            <div className="form-group">
               <div className="form-check form-check-inline">
                 <label className="form-check-label">
                   <input
@@ -617,7 +653,7 @@ class MediaCapture_Web extends Component {
                     id="cameraCheckBox"
                     value="Camera"
                     onChange={this.handleCheckBoxChange}
-                  />{" "}
+                  />
                   Camera
                 </label>
               </div>
@@ -629,28 +665,11 @@ class MediaCapture_Web extends Component {
                     id="screenSharingCheckBox"
                     value="ScreenSharing"
                     onChange={this.handleCheckBoxChange}
-                  />{" "}
+                  />
                   Screen sharing
                 </label>
               </div>
               <div className="form-check form-check-inline">
-                <div className="form-check form-check-inline">
-                  <label className="form-check-label">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="inlineRadioOptions"
-                      id="inlineRadio1"
-                      onChange={e => {
-                        e.target.checked
-                          ? this.setState({ wall: "Giveth_Daily" })
-                          : null;
-                      }}
-                      checked={this.state.wall === "Giveth_Daily"}
-                    />{" "}
-                    Giveth Daily
-                  </label>
-                </div>
                 <div className="form-check form-check-inline">
                   <label className="form-check-label">
                     <input
@@ -664,7 +683,7 @@ class MediaCapture_Web extends Component {
                           : null;
                       }}
                       checked={this.state.wall === "Reward_DAO"}
-                    />{" "}
+                    />
                     Reward DAO
                   </label>
                 </div>
@@ -681,7 +700,7 @@ class MediaCapture_Web extends Component {
                           : null;
                       }}
                       checked={this.state.wall === "Regular_Rewards"}
-                    />{" "}
+                    />
                     Regular Rewards
                   </label>
                 </div>
