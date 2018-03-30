@@ -33,7 +33,9 @@ class MediaCapture_iOS extends Component {
             media: null,            
             title: "",
             description: "",
-            week: _week
+            week: _week,
+            social: "",
+            wallet: "",
         };
 
         this.uploadFile = this.uploadFile.bind(this);
@@ -123,6 +125,14 @@ class MediaCapture_iOS extends Component {
         this.setState({ description: event.target.value });
     }
 
+    onChangeSocialHandle(event) {
+        this.setState({ description: event.target.value });
+    }
+
+    onChangeWallet(event) {
+        this.setState({ description: event.target.value });
+    }
+
     render() {
         const history = this.props.history
         var mediaContent = null;
@@ -167,6 +177,30 @@ class MediaCapture_iOS extends Component {
                                 onChange={this.onChangeDescription.bind(this)}
                                 placeholder="Description of Climate change."
                             />
+                        </div>
+                        <div className="form-group">
+                        <label>Slack/Riot handle:</label>
+                        <input
+                            className="form-control"
+                            name="description"
+                            id="description-input"
+                            type="text"
+                            value={this.state.social}
+                            onChange={this.onChangeSocialHandle.bind(this)}
+                            placeholder="What's your name on Slack/Riot.im?"
+                        />
+                        </div>
+                        <div className="form-group">
+                        <label>Public wallet address (Metamask, MEW,...)</label>
+                        <input
+                            className="form-control"
+                            name="description"
+                            id="description-input"
+                            type="text"
+                            value={this.state.wallet}
+                            onChange={this.onChangeWallet.bind(this)}
+                            placeholder="Provide wallet address to e.g. get rewarded"
+                        />
                         </div>
                         <div className="form-group" >
                             {mediaContent}
