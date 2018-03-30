@@ -48,7 +48,6 @@ class MediaCard extends Component {
   }
 
   handleMouseLeave() {
-    this.refs.vidRef.pause();
     this.refs.vidRef.controls = false;
     this.refs.vidRef.muted = true;
     this._overlay.style.opacity = "0";
