@@ -20,7 +20,7 @@ class MediaCapture_Web extends Component {
     super(props);
 
     var _week;
-    var _wall = "Giveth_Daily";
+    var _wall = "";
     var date = new Date();
     var month = date.getMonth() + 1;
     var year = date.getFullYear();
@@ -59,7 +59,7 @@ class MediaCapture_Web extends Component {
       description: "",
       week: _week,
       wall: _wall,
-      socialHandle: "",
+      social: "",
       wallet: "",
     };
 
@@ -726,9 +726,8 @@ class MediaCapture_Web extends Component {
                 width="240"
               />
             </div>
-
-            {/*
-            <div className="form-group">
+            
+            {this.state.isVideo && (<div className="form-group">
               <button
                 className="btn btn-success"
                 onClick={this.startRecord}
@@ -743,8 +742,8 @@ class MediaCapture_Web extends Component {
               >
                 Stop Record
               </button>
-            </div>
-            */}
+            </div>)}
+           
 
             <div
               className="form-group"
