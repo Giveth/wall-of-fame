@@ -36,6 +36,7 @@ class MediaCapture_iOS extends Component {
             week: _week,
             social: "",
             wallet: "",
+            wall: "",
         };
 
         this.uploadFile = this.uploadFile.bind(this);
@@ -99,6 +100,9 @@ class MediaCapture_iOS extends Component {
                     description: description,
                     timestamp: timestamp,
                     week: this.state.week,
+                    wall: this.state.wall,
+                    wallet: this.state.wallet,
+                    social: this.state.social,
                 });
             });
 
@@ -202,6 +206,42 @@ class MediaCapture_iOS extends Component {
                             placeholder="Provide wallet address to e.g. get rewarded"
                         />
                         </div>
+                        <div className="form-check form-check-inline">
+                        <div className="form-check form-check-inline">
+                        <label className="form-check-label">
+                            <input
+                            className="form-check-input"
+                            type="radio"
+                            name="inlineRadioOptions"
+                            id="inlineRadio2"
+                            onChange={e => {
+                                e.target.checked
+                                ? this.setState({ wall: "Reward_DAO" })
+                                : null;
+                            }}
+                            checked={this.state.wall === "Reward_DAO"}
+                            />
+                            Reward DAO
+                        </label>
+                        </div>
+                        <div className="form-check form-check-inline">
+                        <label className="form-check-label">
+                            <input
+                            className="form-check-input"
+                            type="radio"
+                            name="inlineRadioOptions"
+                            id="inlineRadio3"
+                            onChange={e => {
+                                e.target.checked
+                                ? this.setState({ wall: "Regular_Rewards" })
+                                : null;
+                            }}
+                            checked={this.state.wall === "Regular_Rewards"}
+                            />
+                            Regular Rewards
+                        </label>
+                        </div>
+                    </div>
                         <div className="form-group" >
                             {mediaContent}
                         </div>
