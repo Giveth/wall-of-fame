@@ -627,7 +627,7 @@ class MediaCapture_Web extends Component {
                 name="description"
                 id="description-input"
                 type="text"
-                value={this.state.socialHandle}
+                value={this.state.social}
                 onChange={this.onChangeSocialHandle.bind(this)}
                 placeholder="What's your name on Slack/Riot.im?"
               />
