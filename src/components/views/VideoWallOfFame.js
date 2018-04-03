@@ -20,11 +20,7 @@ class VideoWallOfFame extends Component {
     var _currentweek = moment().format("WW_MM_YYYY")
     var _week = "";
 
-    if (!props.match.params.week) {
-      _week = _currentweek
-    } else {
-      _week = props.match.params.week
-    }
+    _week = _currentweek
 
     if (props.match.params.wall) {
       _wall = props.match.params.wall
