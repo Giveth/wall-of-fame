@@ -97,7 +97,7 @@ class MediaCard extends Component {
             loop
             src={this.state.src}
             onClick={this.onClick}
-            autoplay={autoPlay}
+            autoPlay={autoPlay}
           />
           </div>
         </div>

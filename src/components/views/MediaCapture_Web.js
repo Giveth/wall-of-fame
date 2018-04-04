@@ -576,7 +576,6 @@ class MediaCapture_Web extends Component {
           <div className="col-md-auto">
             <GoBackButton history={history} />
             <h1>Upload a new video or picture</h1>
-            {this.state.uploading ? <div>Uploading...</div> : null}
             <div
               className="alert alert-danger"
               role="alert"
@@ -754,9 +753,10 @@ class MediaCapture_Web extends Component {
                 className="btn btn-success"
                 onClick={this.upload}
               >
-                Upload
+                {this.state.uploading ? 'Uploading...' : 'Upload'}
               </button>
             </div>
+            {this.state.uploadSuccess && <div style={{marginBottom: '1rem', color: 'green'}}>Video successfully uploaded!</div>}
             <div className="form-group">
               <input
                 type="file"
