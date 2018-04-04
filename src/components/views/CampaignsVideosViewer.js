@@ -44,7 +44,7 @@ class CampaignsVideosViewer extends Component {
             <h1>{media.title}</h1>
             <MediaCard
               {...media}
-              autoplay="true"
+              autoPlay="true"
             />
           </div>
         </div>
