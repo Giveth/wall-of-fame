@@ -54,7 +54,7 @@ class MediaCard extends Component {
   }
 
   render() {
-    const { muted, title, date, description, week, wall, src, id, autoPlay } = this.props
+    const { muted, title, date, description, week, wall, src, id, autoPlay, social, wallet } = this.props
     return (
       <div className="card overview-card">
         <div
@@ -68,12 +68,14 @@ class MediaCard extends Component {
             ref={ref => (this._overlay = ref)}
             onMouseMove={this.onMouseMove}
           >
-            <div className="title">{title}</div>
+            <div className="title">{title || 'No title'}</div>
             <div className="date"><span className="fa fa-clock-o" aria-hidden="true"></span> {date}</div>
-            <div className="description">{description}</div>
+            <div className="description">{description || 'No description'}</div>
             <div className="week-wall-container">
               <div className="week-wall"><span className="fa fa-clock-o" aria-hidden="true"></span> {'WEEK: ' + week.split("_")[0]}</div>
-              <div className="week-wall"><span className="fa fa-th-large" aria-hidden="true"></span> {'WALL: ' + wall.split("_").join(' ')}</div>
+              {wall && <div className="week-wall"><span className="fa fa-th-large" aria-hidden="true"></span> {'WALL: ' + wall.split("_").join(' ')}</div>}
+              {social && <div className="week-wall"><span className="fa fa-user" aria-hidden="true"></span> {'SOCIAL: ' + social}</div>}
+              {wallet && <div className="week-wall"><span className="fa fa-address-card" aria-hidden="true"></span> {'WALLET: ' + wallet}</div>}
             </div>
             <div className="watch-button" onClick={this.onClick}>Watch <span className="fa fa-video-camera" aria-hidden="true"></span></div>
             <div className="download-button-container">
