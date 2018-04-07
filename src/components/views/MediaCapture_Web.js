@@ -141,7 +141,6 @@ class MediaCapture_Web extends Component {
   }
 
   upload() {
-    this.setState({ upload: false, uploading: true });
     if (this.state.isRecording) {
       let reader = new FileReader();
       reader.onloadend = () => this.saveToIpfs(reader);
@@ -194,16 +193,25 @@ class MediaCapture_Web extends Component {
   };
 
   uploadFile() {
-    var timestamp = Date.now();
+    var self = this;
     var title = this.state.title;
     var description = this.state.description;
+    var wall = this.state.wall;
+    var social = this.state.social;
+    var wallet = this.state.wallet;
+    var week = this.state.week;
+    var timestamp = Date.now();
+
+    if ([title, description, wall, social, wallet].filter((element) => !element).length) {
+      return alert("You're missing a field! Please check again.")
+    }
 
     var storageRef = firebase
       .storage()
-      .ref("/GVWOF_v2/" + this.state.week + "/" + title);
+      .ref("/GVWOF_v2/" + week + "/" + title);
     var self = this;
 
-    this.setState({ upload: false, uploading: true }, function() {
+    this.setState({ uploading: true }, function() {
       storageRef.put(self.state.file).then(snapshot => {
         var _type = "";
         if (self.state.isImage) {
@@ -223,8 +231,10 @@ class MediaCapture_Web extends Component {
                 description: description,
                 type: _type,
                 timestamp: timestamp,
-                week: this.state.week,
-                wall: this.state.wall,
+                week: week,
+                wall: wall,
+                social: social,
+                wallet: wallet,
                 ipfs: "http://35.188.240.194:8080/ipfs/" + self.state.ipfsId
               },
               function() {
@@ -258,13 +268,21 @@ class MediaCapture_Web extends Component {
     var self = this;
     var title = this.state.title;
     var description = this.state.description;
+    var wall = this.state.wall;
+    var social = this.state.social;
+    var wallet = this.state.wallet;
+    var week = this.state.week;
     var timestamp = Date.now();
+
+    if ([title, description, wall, social, wallet].filter((element) => !element).length) {
+      return alert("You're missing a field! Please check again.")
+    }
 
     var storageRef = firebase
       .storage()
-      .ref("/GVWOF_v2/" + this.state.week + "/" + title);
+      .ref("/GVWOF_v2/" + week + "/" + title);
 
-    this.setState({ upload: false, uploading: true });
+    this.setState({ uploading: true });
 
     storageRef.put(this.state.blob).then(snapshot => {
       var _type = "";
@@ -285,10 +303,10 @@ class MediaCapture_Web extends Component {
               description: description,
               type: _type,
               timestamp: timestamp,
-              week: this.state.week,
-              wall: this.state.wall,
-              social: this.state.social,
-              wallet: this.state.wallet,
+              week: week,
+              wall: wall,
+              social: social,
+              wallet: wallet,
               ipfs: "http://35.188.240.194:8080/ipfs/" + self.state.ipfsId
             },
             function() {
@@ -643,6 +661,44 @@ class MediaCapture_Web extends Component {
                 placeholder="Provide wallet address to e.g. get rewarded"
               />
             </div>
+
+            <div className="form-check form-check-inline">
+              <div className="form-check form-check-inline">
+                <label className="form-check-label">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions"
+                    id="inlineRadio2"
+                    onChange={e => {
+                      e.target.checked
+                        ? this.setState({ wall: "Reward_DAO" })
+                        : null;
+                    }}
+                    checked={this.state.wall === "Reward_DAO"}
+                  />
+                  Reward DAO
+                </label>
+              </div>
+              <div className="form-check form-check-inline">
+                <label className="form-check-label">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions"
+                    id="inlineRadio3"
+                    onChange={e => {
+                      e.target.checked
+                        ? this.setState({ wall: "Regular_Rewards" })
+                        : null;
+                    }}
+                    checked={this.state.wall === "Regular_Rewards"}
+                  />
+                  Regular Rewards
+                </label>
+              </div>
+            </div>
+
             <div className="form-group">
               <div className="form-check form-check-inline">
                 <label className="form-check-label">
@@ -667,42 +723,6 @@ class MediaCapture_Web extends Component {
                   />
                   Screen sharing
                 </label>
-              </div>
-              <div className="form-check form-check-inline">
-                <div className="form-check form-check-inline">
-                  <label className="form-check-label">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="inlineRadioOptions"
-                      id="inlineRadio2"
-                      onChange={e => {
-                        e.target.checked
-                          ? this.setState({ wall: "Reward_DAO" })
-                          : null;
-                      }}
-                      checked={this.state.wall === "Reward_DAO"}
-                    />
-                    Reward DAO
-                  </label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <label className="form-check-label">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      name="inlineRadioOptions"
-                      id="inlineRadio3"
-                      onChange={e => {
-                        e.target.checked
-                          ? this.setState({ wall: "Regular_Rewards" })
-                          : null;
-                      }}
-                      checked={this.state.wall === "Regular_Rewards"}
-                    />
-                    Regular Rewards
-                  </label>
-                </div>
               </div>
             </div>
 
