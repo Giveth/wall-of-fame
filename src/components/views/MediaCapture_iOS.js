@@ -221,7 +221,7 @@ class MediaCapture_iOS extends Component {
                             }}
                             checked={this.state.wall === "Reward_DAO"}
                             />
-                            Reward DAO
+                            RewardDAO
                         </label>
                         </div>
                         <div className="form-check form-check-inline">
