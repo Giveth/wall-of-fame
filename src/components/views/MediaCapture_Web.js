@@ -64,7 +64,7 @@ class MediaCapture_Web extends Component {
     };
 
     this.uploadFile = this.uploadFile.bind(this);
-    this.uploadRecording = this.uploadRecording.bind(this);
+    // this.uploadRecording = this.uploadRecording.bind(this);
     this.handleFile = this.handleFile.bind(this);
     this.startRecord = this.startRecord.bind(this);
     this.stopRecord = this.stopRecord.bind(this);
@@ -109,6 +109,11 @@ class MediaCapture_Web extends Component {
   startRecord() {
     var self = this;
 
+    window.setSrcObject(
+      self.state.stream.getMixedStream(),
+      document.querySelector("video")
+    );
+
     self.setState(
       {
         recordVideo: RecordRTC(this.state.stream.getMixedStream(), {
@@ -129,7 +134,7 @@ class MediaCapture_Web extends Component {
   }
 
   stopRecord() {
-    this.setState({ recording: false });
+    this.setState({ recording: false, isRecording: false });
     this.setState({ upload: true });
     this.state.recordVideo.stopRecording(() => {
       this.setState({
@@ -263,80 +268,80 @@ class MediaCapture_Web extends Component {
     });
   }
 
-  uploadRecording() {
-    // Create a root reference
-    var self = this;
-    var title = this.state.title;
-    var description = this.state.description;
-    var wall = this.state.wall;
-    var social = this.state.social;
-    var wallet = this.state.wallet;
-    var week = this.state.week;
-    var timestamp = Date.now();
+  // uploadRecording() {
+  //   // Create a root reference
+  //   var self = this;
+  //   var title = this.state.title;
+  //   var description = this.state.description;
+  //   var wall = this.state.wall;
+  //   var social = this.state.social;
+  //   var wallet = this.state.wallet;
+  //   var week = this.state.week;
+  //   var timestamp = Date.now();
 
-    if ([title, description, wall, social, wallet].filter((element) => !element).length) {
-      return alert("You're missing a field! Please check again.")
-    }
+  //   if ([title, description, wall, social, wallet].filter((element) => !element).length) {
+  //     return alert("You're missing a field! Please check again.")
+  //   }
 
-    var storageRef = firebase
-      .storage()
-      .ref("/GVWOF_v2/" + week + "/" + title);
+  //   var storageRef = firebase
+  //     .storage()
+  //     .ref("/GVWOF_v2/" + week + "/" + title);
 
-    this.setState({ uploading: true });
+  //   this.setState({ uploading: true });
 
-    storageRef.put(this.state.blob).then(snapshot => {
-      var _type = "";
-      if (this.state.isImage) {
-        _type = "image";
-      } else {
-        _type = "video";
-      }
+  //   storageRef.put(this.state.blob).then(snapshot => {
+  //     var _type = "";
+  //     if (this.state.isImage) {
+  //       _type = "image";
+  //     } else {
+  //       _type = "video";
+  //     }
 
-      storageRef.getDownloadURL().then(url => {
-        firebase
-          .database()
-          .ref("GVWOF_v2/")
-          .push(
-            {
-              src: url,
-              title: title,
-              description: description,
-              type: _type,
-              timestamp: timestamp,
-              week: week,
-              wall: wall,
-              social: social,
-              wallet: wallet,
-              ipfs: "http://35.188.240.194:8080/ipfs/" + self.state.ipfsId
-            },
-            function() {
-              self.setState({
-                file: null,
-                src: null,
-                isVideo: false,
-                isImage: false,
+  //     storageRef.getDownloadURL().then(url => {
+  //       firebase
+  //         .database()
+  //         .ref("GVWOF_v2/")
+  //         .push(
+  //           {
+  //             src: url,
+  //             title: title,
+  //             description: description,
+  //             type: _type,
+  //             timestamp: timestamp,
+  //             week: week,
+  //             wall: wall,
+  //             social: social,
+  //             wallet: wallet,
+  //             ipfs: "http://35.188.240.194:8080/ipfs/" + self.state.ipfsId
+  //           },
+  //           function() {
+  //             self.setState({
+  //               file: null,
+  //               src: null,
+  //               isVideo: false,
+  //               isImage: false,
 
-                upload: false,
-                uploading: false,
-                uploadSuccess: true
-              });
+  //               upload: false,
+  //               uploading: false,
+  //               uploadSuccess: true
+  //             });
 
-              if (self.state.cameraStream) {
-                self.state.cameraStream.stop();
-                self.setState({ cameraStream: null });
-              }
+  //             if (self.state.cameraStream) {
+  //               self.state.cameraStream.stop();
+  //               self.setState({ cameraStream: null });
+  //             }
 
-              if (self.state.screenStream) {
-                self.state.screenStream.stop();
-                self.setState({ screenStream: null });
-              }
+  //             if (self.state.screenStream) {
+  //               self.state.screenStream.stop();
+  //               self.setState({ screenStream: null });
+  //             }
 
-              self.props.history.goBack();
-            }
-          );
-      });
-    });
-  }
+  //             self.props.history.goBack();
+  //           }
+  //         );
+  //     });
+  //   });
+  // }
 
   handleCheckBoxChange(event) {
     var self = this;
@@ -426,7 +431,7 @@ class MediaCapture_Web extends Component {
     if (this.state.isScreenSharing && this.state.isCamera) {
       this.getBoth();
     } else if (this.state.isScreenSharing && !this.state.isCamera) {
-      this.getScreenSharing();
+      this.detectExtension(this)
     } else if (!this.state.isScreenSharing && this.state.isCamera) {
       this.getCamera();
     }
@@ -434,45 +439,42 @@ class MediaCapture_Web extends Component {
 
   getScreenSharing() {
     var self = this;
+    window.getScreenId(function(error, sourceId, screen_constraints) {
+      navigator.mediaDevices
+        .getUserMedia({ video: false, audio: true })
+        .then(function(audioStream) {
+          if (error) {
+            console.log(error);
+            return;
+          }
+          navigator.getUserMedia =
+            navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
+          navigator.mediaDevices
+            .getUserMedia(screen_constraints)
+            .then(function(_screenStream) {
+              _screenStream.fullcanvas = true;
+              _screenStream.width = window.screen.width; // or 3840
+              _screenStream.height = window.screen.height; // or 2160
 
-    captureUserMedia(stream => {
-      window.getScreenId(function(error, sourceId, screen_constraints) {
-        navigator.mediaDevices
-          .getUserMedia({ video: false, audio: true })
-          .then(function(audioStream) {
-            if (error) {
-              console.log(error);
-              return;
-            }
-            navigator.getUserMedia =
-              navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
-            navigator.mediaDevices
-              .getUserMedia(screen_constraints)
-              .then(function(_screenStream) {
-                _screenStream.fullcanvas = true;
-                _screenStream.width = window.screen.width; // or 3840
-                _screenStream.height = window.screen.height; // or 2160
-
-                self.setState(
-                  {
-                    screenStream: _screenStream,
-                    stream: new window.MultiStreamsMixer([
-                      _screenStream,
-                      audioStream
-                    ])
-                  },
-                  function() {
-                    self.state.stream.frameInterval = 1;
-                    self.state.stream.startDrawingFrames();
-                    window.setSrcObject(
-                      self.state.stream.getMixedStream(),
-                      document.querySelector("video")
-                    );
-                  }
-                );
-              });
-          });
-      });
+              self.setState(
+                {
+                  screenStream: _screenStream,
+                  stream: new window.MultiStreamsMixer([
+                    _screenStream,
+                    audioStream
+                  ])
+                },
+                function() {
+                  self.state.stream.frameInterval = 1;
+                  self.state.stream.startDrawingFrames();
+                  window.setSrcObject(
+                    self.state.stream.getMixedStream(),
+                    document.querySelector("video")
+                  );
+                }
+              );
+            });
+        });
     });
   }
 
@@ -553,14 +555,16 @@ class MediaCapture_Web extends Component {
     var image = document.createElement("img");
     image.src = "chrome-extension://" + extensionid + "/icon.png";
     image.onload = function() {
+      self.getScreenSharing();
       //DetectRTC.screen.chromeMediaSource = 'screen';
-      window.postMessage("are-you-there", "*");
-      setTimeout(function() {
-        //if (!DetectRTC.screen.notInstalled) {
-        //callback('installed-enabled');
-        //alert('Not Installed')
-        //}
-      }, 2000);
+      
+      // window.postMessage("are-you-there", "*");
+      // setTimeout(function() {
+      //   //if (!DetectRTC.screen.notInstalled) {
+      //   //callback('installed-enabled');
+      //   //alert('Not Installed')
+      //   //}
+      // }, 2000);
     };
     image.onerror = function() {
       //DetectRTC.screen.notInstalled = true;
@@ -587,7 +591,6 @@ class MediaCapture_Web extends Component {
 
   render() {
     const history = this.props.history;
-
     return (
       <div className="container-fluid page-layout">
         <div className="row justify-content-md-center">
@@ -601,16 +604,14 @@ class MediaCapture_Web extends Component {
                 display: this.state.isExtensionInstalled ? "none" : "block"
               }}
             >
-              <strong>You need install a </strong>
+              <strong>You need to install this </strong>
               <a
                 target="_blank"
                 rel="noopener noreferrer"
                 href="https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk"
                 className="alert-link"
-              >
-                Chrome extension
-              </a>
-              and reload
+              > Chrome extension </a>
+               and reload
             </div>
 
             <div className="form-group">
@@ -677,7 +678,7 @@ class MediaCapture_Web extends Component {
                     }}
                     checked={this.state.wall === "Reward_DAO"}
                   />
-                  Reward DAO
+                  RewardDAO
                 </label>
               </div>
               <div className="form-check form-check-inline">
