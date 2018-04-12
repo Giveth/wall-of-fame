@@ -19,17 +19,11 @@ class MediaCapture_Web extends Component {
   constructor(props) {
     super(props);
 
-    var _week;
     var _wall = "";
     var date = new Date();
     var month = date.getMonth() + 1;
     var year = date.getFullYear();
-
-    if (props.match.params.week != null) {
-      _week = props.match.params.week;
-    } else {
-      _week = currentWeekNumber() + "_" + month + "_" + year;
-    }
+    var _week = currentWeekNumber() + "_" + month + "_" + year;
 
     if (props.match.params.wall != null) {
       _wall = props.match.params.wall;
@@ -134,7 +128,7 @@ class MediaCapture_Web extends Component {
   }
 
   stopRecord() {
-    this.setState({ recording: false, isRecording: false });
+    this.setState({ recording: false });
     this.setState({ upload: true });
     this.state.recordVideo.stopRecording(() => {
       this.setState({
@@ -161,36 +155,30 @@ class MediaCapture_Web extends Component {
   }
 
   saveToIpfs = reader => {
-    if (this.state.isRecording) {
-      this.uploadRecording();
-      return;
-    } else {
-      this.uploadFile();
-      return;
-    }
+    this.uploadFile();
 
-    const ipfs = new window.IpfsApi("35.188.240.194", "443", {
-      protocol: "https"
-    });
-    const buffer = Buffer.from(reader.result);
-    ipfs
-      .add(buffer)
-      .then(response => {
-        //if (err) { console.log(err); return}
-        this.setState({ ipfsId: response[0].hash });
-        if (this.state.isRecording) {
-          this.uploadRecording();
-        } else {
-          this.uploadFile();
-        }
-      })
-      .catch(error => {
-        if (this.state.isRecording) {
-          this.uploadRecording();
-        } else {
-          this.uploadFile();
-        }
-      });
+    // const ipfs = new window.IpfsApi("35.188.240.194", "443", {
+    //   protocol: "https"
+    // });
+    // const buffer = Buffer.from(reader.result);
+    // ipfs
+    //   .add(buffer)
+    //   .then(response => {
+    //     //if (err) { console.log(err); return}
+    //     this.setState({ ipfsId: response[0].hash });
+    //     if (this.state.isRecording) {
+    //       this.uploadRecording();
+    //     } else {
+    //       this.uploadFile();
+    //     }
+    //   })
+    //   .catch(error => {
+    //     if (this.state.isRecording) {
+    //       this.uploadRecording();
+    //     } else {
+    //       this.uploadFile();
+    //     }
+    //   });
   };
 
   arrayBufferToString = arrayBuffer => {
@@ -217,7 +205,7 @@ class MediaCapture_Web extends Component {
     var self = this;
 
     this.setState({ uploading: true }, function() {
-      storageRef.put(self.state.file).then(snapshot => {
+      storageRef.put(self.state.blob || self.state.file).then(snapshot => {
         var _type = "";
         if (self.state.isImage) {
           _type = "image";
