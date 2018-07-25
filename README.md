@@ -14,16 +14,13 @@ This project is actively seeking contributors. If you feel comfortable with Reac
 
 ## Dependencies
 - ReactJS
-- Yarn
 - Firebase
-
-for full list of dependencies see yarn.lock
 
 *Currently* the Wall of Fame uses firebase as database and storage, but it would be nice to migrate away from centralized solutions.
 
 ## Build and Run
 
-`yarn`
+`npm run dev`
 
 --------
 ## REACT documentation

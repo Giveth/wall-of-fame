@@ -1,7 +1,5 @@
-build
 node_modules
-.vscode
-npm-debug.log
-yarn-error.log
-/src/styles/application.css
+.next
+yarn.lock
+privateKey.json
 package-lock.json
