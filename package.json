@@ -1,15 +1,13 @@
 {
-  "name": "giveth",
-  "version": "1.0.0",
-  "description": "Zeit NOW and Next.js boilerplate for Giveth",
+  "name": "wall-of-fame",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Giveth - Wall of Fame",
   "main": "index.js",
-  "repository": "https://github.com/etherno/giveth.git",
-  "author": "Deam",
-  "license": "MIT",
+  "repository": "https://github.com/Giveth/wall-of-fame.git",
   "scripts": {
     "dev": "node server.js",
-    "build": "next build",
-    "start": "NODE_ENV=production node server.js"
+    "serve": "next build && pm2 startOrRestart ecosystem.config.js --env production"
   },
   "dependencies": {
     "clipboard": "^2.0.1",
