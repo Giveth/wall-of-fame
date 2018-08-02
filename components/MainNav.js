@@ -75,6 +75,7 @@ class MainNav extends Component {
           <NavItem href="https://giveth.io/#developers-corner">{t('link3')}</NavItem>
           <NavItem href="https://giveth.io/#unicorn-dac">{t('link4')}</NavItem>
           <NavItem href="https://wiki.giveth.io">{t('link5')}</NavItem>
+          <NavItem href="https://github.com/Giveth/wall-of-fame/issues/new?title=Replace%20this%20with%20what%20went%20wrong&body=Describe%20here%20what%20happened">Support</NavItem>
           <ButtonsContainer>
           <ButtonLink style={{ display: "inline" }} href="https://giveth.io/join/">{t('link6')}</ButtonLink>
           <ButtonLink ml={3} style={{ display: "inline" }} href="https://giveth.io/donate/">{t('link7')}</ButtonLink>
