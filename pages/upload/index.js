@@ -137,6 +137,7 @@ class View extends Component {
       upload: false,
       blob: null,
       src: null,
+      isUploading: false,
     };
   }
 
@@ -183,18 +184,20 @@ class View extends Component {
     if (initialStream) initialStream.stop()
 
     web3.personal.sign(wallet,web3.eth.defaultAccount, (err, res) => {
+      this.setState({ isUploading: true })
       if (res) {
         fetch(location.origin + `/api/upload?wallet=${wallet}&signedMsg=${res}&fileType=${blob.type}` + extras, {
           method: 'POST',
           body: blob
-        })
-          .then(function(res) {
+        }).then((res) => {
             if (res.ok) {
               Router.push('/')
 
+              this.setState({ isUploading: false })
               return alert('Upload successful!')
             }
-            
+          }).catch((e) => {
+            this.setState({ isUploading: false })
             alert('Error occured when trying to upload')
           })
       }
@@ -330,11 +333,11 @@ class View extends Component {
       type,
       file,
       upload,
-      stream,
       cameraStream,
       screenStream,
       isExtensionInstalled,
       isRecording,
+      isUploading,
     } = this.state;
     return (
       <div>
@@ -376,15 +379,6 @@ class View extends Component {
               onChange={e => this.setState({ social: e.target.value })}
             />
           </FormGroup>
-          {/* <FormGroup>
-            <Label>Public wallet address (Metamask, MEW,...)</Label>
-            <Input
-              type="text"
-              name="wallet"
-              placeholder="Provide wallet address to e.g. get rewarded"
-              onChange={e => this.setState({ wallet: e.target.value })}
-            />
-          </FormGroup> */}
           <FormGroup>
             <Label>Choose video category</Label>
             <LabelRadio>
@@ -470,7 +464,7 @@ class View extends Component {
                 bgcolor="white"
                 onClick={this.handleUpload.bind(this)}
               >
-                Upload
+                {isUploading ? 'Uploading...' : 'Upload'}
               </Button>
             </FormGroup>
           )}
