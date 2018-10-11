@@ -112,7 +112,6 @@ class View extends Component {
             <Head>
               <meta property="og:title" content={media.title} />
               <meta property="og:type" content="video.other" />
-              <meta property="og:url" content={media.src} />
               <meta property="og:description" content={media.description} />
             </Head>
             <Link route="/">
