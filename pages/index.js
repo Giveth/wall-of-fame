@@ -155,10 +155,7 @@ class App extends Component {
         <Warning>
           Received points this month? Please add your video below, and/or
           complete{' '}
-          <a href="https://docs.google.com/forms/d/1GdJGWMivV870gAEkf0rUol_Onxt_W4FE61gdYsMh-g8/edit">
-            this form
-          </a>
-          !
+          <a href="https://goo.gl/forms/allw3IgbPQ1JM6gr2">this form</a>!
         </Warning>
         <Wall week={week} />
       </div>
