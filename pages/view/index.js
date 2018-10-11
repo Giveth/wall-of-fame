@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Head from 'next/head'
 import firebase from 'firebase'
 import styled from 'styled-components'
 import moment from 'moment'
@@ -108,6 +109,11 @@ class View extends Component {
         <MainNav />
         {media && (
           <Container>
+            <Head>
+              <meta property="og:title" content={media.title} />
+              <meta property="og:type" content="video.other" />
+              <meta property="og:url" content={media.src} />
+            </Head>
             <Link route="/">
               <Back className="go-back-button">
                 <span className="fa fa-long-arrow-left" /> back
