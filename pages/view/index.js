@@ -1,23 +1,23 @@
-import React, { Component } from "react";
-import firebase from "firebase";
-import styled from 'styled-components';
-import moment from 'moment';
-import { withI18next } from "../../lib/withI18next";
-import initFirebase from "../../lib/initFirebase";
+import React, { Component } from 'react'
+import firebase from 'firebase'
+import styled from 'styled-components'
+import moment from 'moment'
+import { withI18next } from '../../lib/withI18next'
+import initFirebase from '../../lib/initFirebase'
 
+import { Flex, Box } from 'grid-styled'
+import MobileNav from '../../components/MobileNav'
+import MainNav from '../../components/MainNav'
+import { ButtonLink } from '../../components/Button'
+import { Link } from '../../routes'
 
-import { Flex, Box } from 'grid-styled';
-import MobileNav from "../../components/MobileNav";
-import MainNav from "../../components/MainNav";
-import { Button, ButtonLink } from "../../components/Button";
-import { Link } from "../../routes";
-
-initFirebase();
+initFirebase()
 
 const Container = styled.div`
   margin 0 auto;
   max-width 48rem;
   margin-top: 2rem;
+  margin-bottom: 2rem;
   padding: 0 2rem;
   @media (min-width: 56em) {
     margin-top: 6rem;
@@ -34,7 +34,7 @@ const Back = styled.a`
   &:hover {
     color: #2c0d53;
   }
-`;
+`
 
 const Video = styled.video`
   max-width 48rem;
@@ -49,7 +49,7 @@ const Title = styled.h1`
 
 const Date = styled.p`
   margin: 0;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
   font-family: Quicksand;
   font-size: 12px;
   color: #2c0d53;
@@ -64,7 +64,7 @@ const Description = styled.p`
 
 const Items = styled.p`
   margin: 0;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   font-family: Quicksand;
   font-weight: 600;
   font-size: 14px;
@@ -73,40 +73,40 @@ const Items = styled.p`
 
 class View extends Component {
   static async getInitialProps({ query }) {
-    return query;
+    return query
   }
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      media: null
-    };
+      media: null,
+    }
   }
 
   componentWillMount() {
-    const { id } = this.props;
+    const { id } = this.props
     if (id) {
-      const path = "GVWOF_v2/" + id;
-      const ref = firebase.database().ref(path);
+      const path = 'GVWOF_v2/' + id
+      const ref = firebase.database().ref(path)
       ref.on(
-        "value",
+        'value',
         data => this.setState({ media: data.val() }),
         err => console.log(err)
-      );
+      )
     }
   }
 
   render() {
-    const { media } = this.state;
-    let date;
+    const { media } = this.state
+    let date
     if (media) {
-      date = moment(media.timestamp).format('HH:mm DD-MM-YYYY');
+      date = moment(media.timestamp).format('HH:mm DD-MM-YYYY')
     }
     return (
       <div>
         <MobileNav />
         <MainNav />
-        {media &&
+        {media && (
           <Container>
             <Link route="/">
               <Back className="go-back-button">
@@ -114,26 +114,44 @@ class View extends Component {
               </Back>
             </Link>
             <Title>{media.title}</Title>
-            <Video src={media.src} loop controls autoPlay />
+            <Video src={media.src} loop controls />
             <Box>
-              <Date><span className="fa fa-clock-o" aria-hidden="true" /> {date}</Date>
+              <Date>
+                <span className="fa fa-clock-o" aria-hidden="true" /> {date}
+              </Date>
               <Description>{media.description || 'No description'}</Description>
-              <Items><span className="fa fa-th-large" aria-hidden="true" /> WALL: {media.wall.split('_').join(' ')}</Items>
-              <Items><span className="fa fa-user" aria-hidden="true" /> SOCIAL: {media.social}</Items>
-              <Items><span className="fa fa-address-card" aria-hidden="true" /> WALLET: {media.wallet}</Items>
+              <Items>
+                <span className="fa fa-th-large" aria-hidden="true" /> WALL:{' '}
+                {media.wall.split('_').join(' ')}
+              </Items>
+              <Items>
+                <span className="fa fa-user" aria-hidden="true" /> SOCIAL:{' '}
+                {media.social}
+              </Items>
+              <Items>
+                <span className="fa fa-address-card" aria-hidden="true" />{' '}
+                WALLET: {media.wallet}
+              </Items>
               <Box mt={3}>
                 <Flex mt={2}>
-                  <ButtonLink href={media.src} width="100%" mr={1} color="#2c0d54" bgcolor="white">
-                    FIREBASE <span className="fa fa-database" aria-hidden="true" />
+                  <ButtonLink
+                    href={media.src}
+                    width="100%"
+                    mr={1}
+                    color="#2c0d54"
+                    bgcolor="white"
+                  >
+                    FIREBASE{' '}
+                    <span className="fa fa-database" aria-hidden="true" />
                   </ButtonLink>
                 </Flex>
               </Box>
             </Box>
           </Container>
-        }
+        )}
       </div>
-    );
+    )
   }
 }
 
-export default withI18next(["common", "navigation"])(View);
+export default withI18next(['common', 'navigation'])(View)
