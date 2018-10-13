@@ -26,7 +26,7 @@ class App extends Component {
   }
 
   render() {
-    const { week } = this.props
+    const { month } = this.props
 
     return (
       <div>
@@ -157,7 +157,7 @@ class App extends Component {
           complete{' '}
           <a href="https://goo.gl/forms/allw3IgbPQ1JM6gr2">this form</a>!
         </Warning>
-        <Wall week={week} />
+        <Wall month={month} />
       </div>
     )
   }

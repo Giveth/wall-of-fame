@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import firebase from "firebase";
-import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import moment from "moment";
-import styled from 'styled-components';
+import React, { Component } from 'react'
+import firebase from 'firebase'
+import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry'
+import moment from 'moment'
+import styled from 'styled-components'
 
-import { Box } from 'grid-styled';
-import MediaCard from './MediaCard';
-import { Button } from './Button';
+import { Box } from 'grid-styled'
+import MediaCard from './MediaCard'
+import { Button } from './Button'
 
-import { Link } from '../routes';
+import { Link } from '../routes'
 
 const Container = styled.div`
   padding: 2rem;
@@ -53,38 +53,41 @@ class Wall extends Component {
     this.state = {
       media: [],
       currentMedia: [],
-      wall: "",
-      week: props.week || moment().format("WW_MM_YYYY"),
+      wall: '',
+      month: props.month || moment().format('MM_YYYY'),
       previous: null,
       next: null,
     }
   }
 
   componentDidMount() {
-    const ref = firebase.database().ref("GVWOF_v2/");
-    ref.on('value', this.gotData, (err) => console.log(err));
+    const ref = firebase.database().ref('GVWOF_v2/')
+    ref.on('value', this.gotData, err => console.log(err))
   }
 
-  gotData = (data) => {
+  gotData = data => {
     const mediaData = data.val()
 
     const media = []
     for (let key in mediaData) {
       const video = mediaData[key]
-      const date = video.week.split('_')
-      video.weekYear = date[2] + date[0]
+      video.month = moment(video.timestamp).format('MM_YYYY')
+      video.monthYear = Number(moment(video.timestamp).format('YYYYMM'))
       video.id = key
       media.push(video)
     }
+    // console.log(media.length)
     media.sort((a, b) => {
-      return b.weekYear - a.weekYear
+      return b.monthYear - a.monthYear
     })
+
+    // console.log(media)
 
     let cache
     let counter = -1
     let mediaList = []
-    media.forEach((video) => {
-      const timestamp = video.weekYear
+    media.forEach(video => {
+      const timestamp = video.monthYear
       if (timestamp === cache) {
         mediaList[counter].push(video)
       } else {
@@ -94,78 +97,99 @@ class Wall extends Component {
       cache = timestamp
     })
 
+    // console.log(mediaList)
+
     let index, previous, next
     mediaList.forEach((list, idx) => {
       if (previous || next) {
         return
       }
-      list.forEach((video) => {
-        if (video.week === this.state.week) {
+      list.forEach(video => {
+        if (video.month === this.state.month) {
           index = idx
-          previous = mediaList[idx + 1] ? mediaList[idx + 1][0].week : null
-          next = mediaList[idx - 1] ? mediaList[idx - 1][0].week : null
+          previous = mediaList[idx + 1] ? mediaList[idx + 1][0].month : null
+          next = mediaList[idx - 1] ? mediaList[idx - 1][0].month : null
         }
       })
     })
 
     if (!index) {
       index = 0
-      previous = mediaList[1] ? mediaList[1][0].week : null
-      this.state.week = mediaList[0][0].week
+      previous = mediaList[1] ? mediaList[1][0].month : null
+      this.state.month = mediaList[0][0].month
     }
+
+    // console.log(mediaList)
 
     this.setState({
       media: mediaList,
-      currentMedia: this.state.wall ? mediaList[index].filter((video) => video.wall === this.state.wall) : mediaList[index],
+      currentMedia: this.state.wall
+        ? mediaList[index].filter(video => video.wall === this.state.wall)
+        : mediaList[index],
       previous,
       next,
     })
   }
 
   componentWillReceiveProps(newProps) {
-    var week = newProps.week || moment().format("WW_MM_YYYY");
-    var wall = "";
+    var month = newProps.month || moment().format('MM_YYYY')
+    var wall = ''
 
     let index, next, previous
     const media = this.state.media
     media.forEach((list, idx) => {
-      list.forEach((video) => {
-        if (video.week === week) {
+      list.forEach(video => {
+        if (video.month === month) {
           index = idx
-          previous = media[idx + 1] ? media[idx + 1][0].week : null
-          next = media[idx - 1] ? media[idx - 1][0].week : null
+          previous = media[idx + 1] ? media[idx + 1][0].month : null
+          next = media[idx - 1] ? media[idx - 1][0].month : null
         }
       })
     })
 
-    if (newProps.week) {
+    if (newProps.month) {
       this.setState({
-        currentMedia: this.state.wall ? this.state.media[index].filter((video) => video.wall === this.state.wall) : this.state.media[index],
+        currentMedia: this.state.wall
+          ? this.state.media[index].filter(
+              video => video.wall === this.state.wall
+            )
+          : this.state.media[index],
         next,
         previous,
-        week,
-        wall
+        month,
+        wall,
       })
     }
   }
 
   render() {
-    const { media, currentMedia, week, next, previous } = this.state;
-    const date = week.split("_");
+    const { currentMedia, month, next, previous } = this.state
+    const date = month.split('_')
+
     return (
       <div>
         <Container>
-          {next ?
-            <Link route={`/week/${next}`}>
-              <Button color="#2c0d54" bgcolor="white">NEXT WEEK</Button>
-            </Link> : <Box width="125px" />
-          }
-          <Text>WEEK {date[0]} - {date[2]}</Text>
-          {previous ?
-            <Link route={`/week/${previous}`}>
-              <Button color="#2c0d54" bgcolor="white">PREVIOUS WEEK</Button>
-            </Link> : <Box width="162px" />
-          }
+          {next ? (
+            <Link route={`/month/${next}`}>
+              <Button color="#2c0d54" bgcolor="white">
+                NEXT MONTH
+              </Button>
+            </Link>
+          ) : (
+            <Box width="125px" />
+          )}
+          <Text>
+            MONTH {date[0]} - {date[1]}
+          </Text>
+          {previous ? (
+            <Link route={`/month/${previous}`}>
+              <Button color="#2c0d54" bgcolor="white">
+                PREVIOUS MONTH
+              </Button>
+            </Link>
+          ) : (
+            <Box width="162px" />
+          )}
         </Container>
         <ResponsiveMasonry
           columnsCountBreakPoints={{
@@ -177,14 +201,30 @@ class Wall extends Component {
           }}
         >
           <Masonry gutter=".5rem">
-            {currentMedia ? currentMedia.map((props) => <div style={{bottom: '-5px'}} >
-              <MediaCard {...props} />
-            </div>) : <div />}
+            {currentMedia ? (
+              currentMedia.map(props => (
+                <div style={{ bottom: '-5px' }}>
+                  <MediaCard {...props} />
+                </div>
+              ))
+            ) : (
+              <div />
+            )}
           </Masonry>
         </ResponsiveMasonry>
         <Link route="/upload">
           <UploadButton>
-            <svg className="svgIcon" width="48px" height="48px" viewBox="0 0 48 48"><path d="M38 26H26v12h-4V26H10v-4h12V10h4v12h12v4z" fill="white"></path></svg>
+            <svg
+              className="svgIcon"
+              width="48px"
+              height="48px"
+              viewBox="0 0 48 48"
+            >
+              <path
+                d="M38 26H26v12h-4V26H10v-4h12V10h4v12h12v4z"
+                fill="white"
+              />
+            </svg>
           </UploadButton>
         </Link>
       </div>
@@ -192,4 +232,4 @@ class Wall extends Component {
   }
 }
 
-export default Wall;
+export default Wall
