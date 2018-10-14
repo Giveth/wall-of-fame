@@ -110,6 +110,10 @@ class View extends Component {
         {media && (
           <Container>
             <Head>
+              <meta
+                property="og:image"
+                content="https://fame.giveth.io/static/preview.jpg"
+              />
               <meta property="og:title" content={media.title} />
               <meta property="og:type" content="video.other" />
               <meta property="og:video" content={media.src} />
