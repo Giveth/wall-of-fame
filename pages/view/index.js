@@ -112,7 +112,7 @@ class View extends Component {
             <Head>
               <meta
                 property="og:image"
-                content="https://fame.giveth.io/static/preview.jpg"
+                content="https://fame.giveth.io/static/preview.png"
               />
               <meta property="og:title" content={media.title} />
               <meta property="og:type" content="video.other" />
