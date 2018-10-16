@@ -103,6 +103,7 @@ class View extends Component {
     if (media) {
       date = moment(media.timestamp).format('HH:mm DD-MM-YYYY')
     }
+
     return (
       <div>
         <MobileNav />
@@ -113,6 +114,10 @@ class View extends Component {
               <meta
                 property="og:image"
                 content="https://fame.giveth.io/static/preview.png"
+              />
+              <meta
+                property="og:url"
+                content={'https://fame.giveth.io/view/' + this.props.id}
               />
               <meta property="og:title" content={media.title} />
               <meta property="og:type" content="video.other" />
