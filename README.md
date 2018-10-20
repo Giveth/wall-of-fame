@@ -1,9 +1,11 @@
 # Giveth 'Video Wall of Fame'
+
 The Wall of Fame is a video portal for showing off contributions to the 'Giveth Galaxy'. The service is realized as a ReactJS web application.
 
 For more information about Giveth, please visit our website [giveth.io](https://giveth.io) or our [wiki](https://wiki.giveth.io)
 
 ## Call to Action
+
 This project is actively seeking contributors. If you feel comfortable with ReactJS/CSS and want to contribute:
 
 **1 - Please see current [issues](https://github.com/Giveth/wall-of-fame/issues)** for more info on what is needed.
@@ -13,16 +15,24 @@ This project is actively seeking contributors. If you feel comfortable with Reac
 **3 - Contributors get rewarded!** Please see the [Giveth Contributors Guide](https://wiki.giveth.io/dac/contributors-guide/) for information on the full process.
 
 ## Dependencies
+
 - ReactJS
 - Firebase
 
-*Currently* the Wall of Fame uses firebase as database and storage, but it would be nice to migrate away from centralized solutions.
+_Currently_ the Wall of Fame uses firebase as database and storage, but it would be nice to migrate away from centralized solutions.
 
-## Build and Run
+## Workflow
+
+### Development
 
 `npm run dev`
 
---------
+### Production
+
+`npm run serve`
+
+---
+
 ## REACT documentation
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
