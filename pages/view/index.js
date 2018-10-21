@@ -130,7 +130,7 @@ class View extends Component {
               </Back>
             </Link>
             <Title>{media.title}</Title>
-            <Video src={media.src} loop controls />
+            <Video src={media.src} loop controls="true" />
             <Box>
               <Date>
                 <span className="fa fa-clock-o" aria-hidden="true" /> {date}
