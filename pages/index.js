@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import Head from 'next/head'
+
 import { withI18next } from '../lib/withI18next'
 import initFirebase from '../lib/initFirebase'
 
@@ -30,6 +32,17 @@ class App extends Component {
 
     return (
       <div>
+        <Head>
+          <meta
+            property="og:image"
+            content="https://fame.giveth.io/static/preview.png"
+          />
+          <meta property="og:title" content="Giveth Video Wall of Fame" />
+          <meta
+            property="og:description"
+            content="Where the Giveth Unicorns show off their work in the Giveth Galaxy"
+          />
+        </Head>
         <MobileNav />
         <MainNav />
         <Header>
