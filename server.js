@@ -137,6 +137,11 @@ i18nInstance
           }
         });
 
+        // To serve service-worker, hopefully fixing caching issues
+        server.get('/service-worker.js', (req, res) => {
+          res.sendFile('service-worker.js', { root : __dirname});
+        });
+
         // use next.js
         server.get('*', (req, res) => handle(req, res))
 
