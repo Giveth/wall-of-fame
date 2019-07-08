@@ -166,9 +166,10 @@ class App extends Component {
           </svg>
         </Header>
         <Warning>
-          Received points this month? Please add your video below, and/or
-          complete{' '}
-          <a href="https://goo.gl/forms/allw3IgbPQ1JM6gr2">this form</a>!
+          Received points in Riot? Please add your video below and embed link in your RewardDAO Milestone.
+          You can report any issues to our Github Repo, Thank you for contributing to Giveth!{' '}
+          <a href="https://beta.giveth.io/campaigns/5b3d9746329bc64ae74d1424">RewardDAO Milestone link</a>!
+          <a href="https://github.com/Giveth/wall-of-fame">Github Repo link</a>!
         </Warning>
         <Wall month={month} />
       </div>
