@@ -149,7 +149,7 @@ class View extends Component {
     });
   }
 
-  handleUpload() {
+  async handleUpload() {
     const { title, description, social, category, blob } = this.state;
 
     if (
