@@ -149,7 +149,7 @@ class View extends Component {
     });
   }
 
-  handleUpload() {
+  async handleUpload() {
     const { title, description, social, category, blob } = this.state;
 
     if (
@@ -163,6 +163,15 @@ class View extends Component {
 
     if (!window.web3) {
       return alert('No injected web3 instance was detected - Please install e.g. MetaMask')
+    }
+
+    if (window.ethereum) {
+      window.web3 = new Web3(ethereum);
+      try {
+        await ethereum.enable();
+      } catch (error) {
+        return alert('You must allow access to Metamask');
+      }
     }
 
     const wallet = web3.eth.defaultAccount
