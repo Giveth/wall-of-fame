@@ -166,10 +166,8 @@ class App extends Component {
           </svg>
         </Header>
         <Warning>
-          Received points in Riot? Please add your video below and embed link in your RewardDAO Milestone.
-          You can report any issues to our Github Repo, Thank you for contributing to Giveth!{' '}
-          <a href="https://beta.giveth.io/campaigns/5b3d9746329bc64ae74d1424">RewardDAO Milestone link</a>!
-          <a href="https://github.com/Giveth/wall-of-fame">Github Repo link</a>!
+          <p>Received points in Riot? Please add your video below and embed link in your <a href="https://beta.giveth.io/campaigns/5b3d9746329bc64ae74d1424">RewardDAO Milestone</a>!.</p>
+          <p>You can report any issues to our <a href="https://github.com/Giveth/wall-of-fame">Github Repo</a>, Thank you for contributing to Giveth!</p>
         </Warning>
         <Wall month={month} />
       </div>
