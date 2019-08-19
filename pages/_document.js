@@ -20,7 +20,7 @@ export default class MyDocument extends Document {
             content="Where the Giveth Unicorns show off their work in the Giveth Galaxy"
           />
           <title>Giveth Video Wall of Fame</title>
-          <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+          <link rel="icon" type="image/x-icon" href="/static/giveth.png" />
           <link
             rel="stylesheet"
             type="text/css"
